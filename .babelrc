@@ -1,0 +1,18 @@
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "useBuiltIns": "usage",
+        "exclude": [
+          "babel-plugin-transform-classes",
+          "@babel/plugin-transform-classes"
+        ],
+        "targets": { "node": 10 },
+        "corejs": 2
+      }
+    ],
+    ["@babel/react"],
+    ["@babel/preset-flow"]
+  ]
+}

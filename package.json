@@ -1,0 +1,53 @@
+{
+  "name": "@PartyLich/advent2019-js",
+  "version": "0.1.0",
+  "description": "",
+  "author": "PartyLich",
+  "license": "MIT",
+  "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:PartyLich/advent2019.git"
+  },
+  "scripts": {
+    "start": "node -r esm ./src/index.js",
+    "prebuild": "npm run lint && npm run flow",
+    "build": "babel src -d dist",
+    "client": "NODE_ENV=production webpack --progress",
+    "dev": "webpack --watch --progress & npm run watch",
+    "serve": "node dist/index.js",
+    "test": "babel-tape-runner src/**/*.test.js test/**/*.test.js",
+    "lint": "eslint ./src && echo Lint Complete",
+    "lint:fix": "eslint ./src --fix",
+    "flow": "flow",
+    "verify": "npm run -s test && flow && npm run -s lint",
+    "watch:flow": "watch -t 'npx flow'",
+    "watch:lint": "watch 'npm run lint'",
+    "watch:server": "nodemon -r esm src/index.js",
+    "watch:source": "watch 'clear && npm run verify' src test",
+    "watch": "npm run watch:server & npm run watch:source"
+  },
+  "husky": {
+    "pre-commit": "npm run verify"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.7.4",
+    "@babel/node": "^7.5.5",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/preset-flow": "^7.7.4",
+    "babel-eslint": "^10.0.3",
+    "babel-tape-runner": "^3.0.0",
+    "eslint": "^6.5.1",
+    "eslint-config-partylich": "^0.1.1",
+    "eslint-plugin-flowtype": "^4.5.2",
+    "esm": "^3.2.25",
+    "flow-bin": "^0.112.0",
+    "husky": "^3.1.0",
+    "nodemon": "^1.19.4",
+    "tape": "^4.11.0",
+    "watch": "^1.0.2"
+  }
+}
