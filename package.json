@@ -18,7 +18,7 @@
     "serve": "node dist/index.js",
     "test": "tape -r esm src/**/*.test.js test/**/*.test.js",
     "lint": "eslint ./src && echo Lint Complete",
-    "lint:fix": "eslint ./src --fix",
+    "lint:fix": "eslint ./src --fix && echo Lint Complete",
     "flow": "flow",
     "verify": "npm run -s test && flow && npm run -s lint",
     "watch:flow": "watch -t 'npx flow'",
@@ -28,7 +28,10 @@
     "watch": "npm run watch:server & npm run watch:source"
   },
   "husky": {
-    "pre-commit": "npm run verify"
+    "hooks": {
+      "pre-commit": "npm run verify",
+      "pre-push": "npm test"
+    }
   },
   "dependencies": {},
   "devDependencies": {
