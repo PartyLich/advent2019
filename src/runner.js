@@ -1,7 +1,8 @@
 import fs from 'fs';
 import { Writable } from 'stream';
 
-import { totalFuel } from './1';
+// import { xForm, totalFuel } from './1';
+import { xForm, solve } from './2';
 
 // read filename from stdin; exit if not provided
 const [fname] = process.argv.slice(2);
@@ -12,10 +13,6 @@ if (!fname) {
 
 console.log(`Input from ${ fname }.txt`);
 const fstream = fs.createReadStream(__dirname + `/../input/${ fname }.txt`);
-
-
-// Buffer -> []string
-const xForm = (chunk) => chunk.toString().split('\n');
 
 // str -> number
 const toInt = (el) => parseInt(el, 10);
@@ -37,7 +34,7 @@ const w = new Writable({
 process.stdout.on('error', process.exit);
 
 const exec = (input) => {
-  const result = totalFuel(input);
+  const result = solve(input);
 
   return result;
 };
