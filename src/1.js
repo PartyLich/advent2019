@@ -13,3 +13,6 @@ export const fuelReq = (mass) => Math.floor(mass / 3) - 2;
 
 // []number -> number
 export const totalFuel = fuelCalc(fuelReq);
+
+// Buffer -> []string
+export const xForm = (chunk) => chunk.toString().split('\n');
