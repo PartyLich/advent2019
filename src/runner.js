@@ -2,7 +2,8 @@ import fs from 'fs';
 import { Writable } from 'stream';
 
 // import { xForm, totalFuel } from './1';
-import { xForm, solve } from './2';
+import { xForm } from './2';
+import { solve } from './2.2';
 
 // read filename from stdin; exit if not provided
 const [fname] = process.argv.slice(2);
