@@ -12,7 +12,6 @@
         "corejs": 2
       }
     ],
-    ["@babel/react"],
     ["@babel/preset-flow"]
   ]
 }
