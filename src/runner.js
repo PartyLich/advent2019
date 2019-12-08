@@ -1,9 +1,8 @@
 import fs from 'fs';
 import { Writable } from 'stream';
 
-// import { xForm, totalFuel } from './1';
-import { xForm } from './2';
-import { solve } from './2.2';
+import { xForm } from './1';
+import { inpFilter, inpMap, solve } from './3';
 
 // read filename from stdin; exit if not provided
 const [fname] = process.argv.slice(2);
@@ -15,8 +14,6 @@ if (!fname) {
 console.log(`Input from ${ fname }.txt`);
 const fstream = fs.createReadStream(__dirname + `/../input/${ fname }.txt`);
 
-// str -> number
-const toInt = (el) => parseInt(el, 10);
 
 // string -> bool
 const notEmpty = (str) => !!str;
@@ -27,7 +24,8 @@ const w = new Writable({
   write(chunk, _, next) {
     arr = arr.concat(xForm(chunk))
         .filter(notEmpty)
-        .map(toInt);
+        .filter(inpFilter)
+        .map(inpMap);
     next();
   },
 });
@@ -35,9 +33,7 @@ const w = new Writable({
 process.stdout.on('error', process.exit);
 
 const exec = (input) => {
-  const result = solve(input);
-
-  return result;
+  return solve(input);
 };
 
 fstream.pipe(w);
