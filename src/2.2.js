@@ -21,15 +21,23 @@ export const solve = (input = []) => {
   let result = 0;
   let noun;
   let verb;
+  let inc = Math.floor(99 / 2);
+  let iter = 0;
 
   for (noun = 0; noun < 100; noun++) {
-    for (verb = 0; verb < 100; verb++) {
+    for (verb = 0; verb < 100; verb += inc) {
       result = computer(restore(input)(noun, verb))[0];
+      iter++;
       if (result === target) break;
+      if (result > target) {
+        verb -= inc;
+        inc -= Math.floor(inc / 2);
+        console.log('inc: %s, result: %s', inc, result);
+      }
     }
     if (result === target) break;
   }
 
-  console.log('noun: %s, verb: %s', noun, verb);
+  console.log('noun: %s, verb: %s, iter: %s', noun, verb, iter);
   return 100 * noun + verb;
 };
