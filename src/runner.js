@@ -3,7 +3,7 @@ import { Writable } from 'stream';
 
 import { xForm } from './1';
 import { inpFilter, inpMap } from './3';
-import { solve } from './4';
+import { solve } from './4.2';
 
 // read filename from stdin; exit if not provided
 const [fname] = process.argv.slice(2);
