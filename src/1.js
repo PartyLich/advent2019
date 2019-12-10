@@ -16,3 +16,6 @@ export const totalFuel = fuelCalc(fuelReq);
 
 // Buffer -> []string
 export const xForm = (chunk) => chunk.toString().split('\n');
+
+// string -> number
+export const inpMap = (el) => parseInt(el, 10);
