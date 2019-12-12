@@ -10,7 +10,7 @@
     "url": "git@github.com:PartyLich/advent2019.git"
   },
   "scripts": {
-    "start": "node -r esm ./src/index.js",
+    "start": "node -r esm ./src/runner.js",
     "prebuild": "npm run lint && npm run flow",
     "build": "babel src -d dist",
     "client": "NODE_ENV=production webpack --progress",

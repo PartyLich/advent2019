@@ -22,6 +22,6 @@ Run modules with `node -r esm`
 
 If your data is `day1.txt`,
 
-use `node -r esm src/runner.js day1`
+use `npm start -- day1`
 
 Note: it's a very low effort util. Expect it to be brittle, maybe even dangerous 💀.
