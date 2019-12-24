@@ -1,3 +1,5 @@
+export const identity = (x) => x;
+
 // string -> number
 export const toDecimal = (str) => parseInt(str, 10);
 
