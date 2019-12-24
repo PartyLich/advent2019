@@ -6,33 +6,12 @@ import {
   sum,
 } from './funtils';
 
-const castBigNumbers = (num) => (num > Number.MAX_SAFE_INTEGER)
-    ? BigInt(num)
-    : num;
 
 // number -> array | string -> array | string
 const sliceFirst = (count) => (arr) => arr.slice(0, count);
 
-// any -> string
-const toString = (el) => el.toString();
-
 // number -> number
-export const firstEight = pipe(
-    castBigNumbers,
-    toString,
-    sliceFirst(8),
-    toDecimal,
-);
-
-// string -> []number
-const strToDigits = (str) => str.split('').map(toDecimal);
-
-// number -> []number
-const numToDigits = pipe(
-    castBigNumbers,
-    toString,
-    strToDigits,
-);
+export const firstEight = sliceFirst(8);
 
 export const makeNode = (val, next = null) => ({
   val,
@@ -82,12 +61,12 @@ const makePattern = () => {
 // number -> [][]number
 export const calcDigits = (len) => (num) => {
   const pattern = makePattern();
-  const digits = numToDigits(num);
+  const digits = num.split('');
   let res = [];
 
   // zero pad
   while (digits.length < len) {
-    digits.unshift(0);
+    digits.unshift('0');
   }
 
   for (let i = 0, len = digits.length; i < len; i++ ) {
@@ -102,7 +81,7 @@ export const calcDigits = (len) => (num) => {
         node = node.next;
       }
 
-      tmp = [...tmp, digit * node.val];
+      tmp = [...tmp, toDecimal(digit) * node.val];
     }
     res = [...res, tmp];
   }
@@ -114,11 +93,11 @@ export const calcDigits = (len) => (num) => {
 const sumArray = (arr) => arr.reduce(sum);
 // [][]number -> []number
 const reduceDigits = (arr) => arr.map(sumArray);
-// number -> number
-const lastDigit = (num) => Math.abs(num % 10);
+// number -> string
+export const lastDigit = (num) => num.toString().slice(-1);
 // []number -> []number
 const mapLastDigit = (arr) => arr.map(lastDigit);
-// []number -> number
+// []number -> string
 const joinDigits = (arr) => arr.join('');
 
 // number -> number -> number
@@ -127,20 +106,20 @@ export const fftOnce = (len) => pipe(
     reduceDigits,
     mapLastDigit,
     joinDigits,
-    toDecimal,
 );
 
-// number -> number -> number
+// number -> string -> string
 export const fft = (phases) => (num) => {
-  const len = castBigNumbers(num).toString().length;
+  const { length } = num;
   let result = num;
 
   for (let i = phases; i > 0; i--) {
-    result = fftOnce(len)(result);
+    result = fftOnce(length)(result);
   }
 
   return result;
 };
+
 
 export const solve = ([input]) => {
   return pipe(
