@@ -4,10 +4,9 @@ import { Writable } from 'stream';
 import { xForm } from './1';
 import {
   inpFilter, inpMap,
-  // solve,
+  solve,
   // solve2 as solve,
-  visual as solve,
-} from './13';
+} from './14';
 
 // read filename from stdin; exit if not provided
 const [fname] = process.argv.slice(2);
