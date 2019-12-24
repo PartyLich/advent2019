@@ -1,7 +1,7 @@
 // Advent of Code 2019
 // Day 10: Monitoring Station
 // Rewrite
-import { sum } from './1';
+import { sum } from './funtils';
 
 
 // string -> obj -> obj -> bool

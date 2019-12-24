@@ -1,6 +1,6 @@
 // Advent of Code 2019
 // Day 8: Space Image Format
-import { toDecimal } from './5';
+import { toDecimal } from './funtils';
 
 
 export const inpMap = (str) => str.split('').map(toDecimal);

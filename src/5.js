@@ -5,10 +5,8 @@ import {
   mult as curryMult,
 } from './2';
 import { inpMap as commaSplit } from './3';
+import { toDecimal } from './funtils';
 
-
-// string -> number
-export const toDecimal = (str) => parseInt(str, 10);
 
 // string -> []number
 export const inpMap = (str) => commaSplit(str).map(toDecimal);

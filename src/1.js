@@ -1,8 +1,7 @@
 // Advent of Code 2019
 // Day 1: The Tyranny of the Rocket Equation
+import { sum } from './funtils';
 
-// number -> number
-export const sum = (a, b) => a + b;
 
 // function -> []number -> number
 export const fuelCalc = (fuelReq) => (modules) =>
