@@ -70,7 +70,7 @@ export const calcDigits = (len) => (num) => {
   }
 
   for (let i = 0, len = digits.length; i < len; i++ ) {
-    let tmp = [];
+    const tmp = [];
     let counter = i + 1;
     let node = pattern.head;
 
@@ -81,7 +81,7 @@ export const calcDigits = (len) => (num) => {
         node = node.next;
       }
 
-      tmp = [...tmp, toDecimal(digit) * node.val];
+      tmp.push(toDecimal(digit) * node.val);
     }
     res = [...res, tmp];
   }
