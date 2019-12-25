@@ -3,7 +3,7 @@ import { Writable } from 'stream';
 
 import { xForm } from './1';
 import { inpFilter } from './3';
-import { identity as inpMap } from './funtils';
+import { inpMap } from './16';
 import { solve } from './16';
 
 // read filename from stdin; exit if not provided

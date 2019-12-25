@@ -12,32 +12,20 @@ import {
 test('16: lastDigit()', (t) => {
   {
     const msg = 'only digit';
-    const expected = '8';
+    const expected = 8;
     const actual = lastDigit('8');
     t.equal(actual, expected, msg);
   }
   {
     const msg = 'negatives';
-    const expected = '8';
+    const expected = 8;
     const actual = lastDigit('-12345678');
     t.equal(actual, expected, msg);
   }
   {
     const msg = 'bigger number';
-    const expected = '8';
+    const expected = 8;
     const actual = lastDigit('12345678');
-    t.equal(actual, expected, msg);
-  }
-  {
-    const msg = 'BigInt sized number';
-    const expected = '5';
-    const actual = lastDigit('80871224585914546619083218645595');
-    t.equal(actual, expected, msg);
-  }
-  {
-    const msg = 'negative BigInt sized number';
-    const expected = '5';
-    const actual = lastDigit('-80871224585914546619083218645595');
     t.equal(actual, expected, msg);
   }
 
@@ -99,10 +87,10 @@ test('16: makeNode()', (t) => {
 test('16: fftOnce()', (t) => {
   {
     const msg = '1 phase FFT of 12345678 -> 48226158';
-    const expected = '48226158';
+    const expected = [4, 8, 2, 2, 6, 1, 5, 8];
     const len = (12345678).toString().length;
     const actual = fftOnce(len)('12345678');
-    t.equal(actual, expected, msg);
+    t.deepEqual(actual, expected, msg);
   }
 
   t.end();
@@ -111,21 +99,21 @@ test('16: fftOnce()', (t) => {
 test('16: fft()', (t) => {
   {
     const msg = '2 phases FFT of 12345678 -> 34040438';
-    const expected = '34040438';
+    const expected = [3, 4, 0, 4, 0, 4, 3, 8];
     const actual = fft(2)('12345678');
-    t.equal(actual, expected, msg);
+    t.deepEqual(actual, expected, msg);
   }
   {
     const msg = '3 phases FFT of 12345678 -> 03415518';
-    const expected = '03415518';
+    const expected = [0, 3, 4, 1, 5, 5, 1, 8];
     const actual = fft(3)('12345678');
-    t.equal(actual, expected, msg);
+    t.deepEqual(actual, expected, msg);
   }
   {
     const msg = '4 phases FFT of 12345678 -> 01029498';
-    const expected = '01029498';
+    const expected = [0, 1, 0, 2, 9, 4, 9, 8];
     const actual = fft(4)('12345678');
-    t.equal(actual, expected, msg);
+    t.deepEqual(actual, expected, msg);
   }
 
   t.end();

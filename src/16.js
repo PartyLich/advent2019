@@ -6,11 +6,13 @@ import {
   sum,
 } from './funtils';
 
+// string -> []number
+export const inpMap = (str) => str.split('').map(toDecimal);
 
 // number -> array | string -> array | string
 const sliceFirst = (count) => (arr) => arr.slice(0, count);
 
-// number -> number
+// array | string -> array | string
 export const firstEight = sliceFirst(8);
 
 export const makeNode = (val, next = null) => ({
@@ -59,9 +61,8 @@ const makePattern = () => {
 };
 
 // number -> [][]number
-export const calcDigits = (len) => (num) => {
+export const calcDigits = (len) => (digits) => {
   const pattern = makePattern();
-  const digits = num.split('');
   let res = [];
 
   // zero pad
@@ -81,7 +82,7 @@ export const calcDigits = (len) => (num) => {
         node = node.next;
       }
 
-      tmp.push(toDecimal(digit) * node.val);
+      tmp.push(digit * node.val);
     }
     res = [...res, tmp];
   }
@@ -91,24 +92,25 @@ export const calcDigits = (len) => (num) => {
 
 // []number -> number
 const sumArray = (arr) => arr.reduce(sum);
-// [][]number -> []number
-const reduceDigits = (arr) => arr.map(sumArray);
-// number -> string
-export const lastDigit = (num) => num.toString().slice(-1);
-// []number -> []number
-const mapLastDigit = (arr) => arr.map(lastDigit);
+// number -> number
+export const lastDigit = (num) => Math.abs(num % 10);
 // []number -> string
 const joinDigits = (arr) => arr.join('');
+
+// function -> array -> array
+const mapWith = (fn) => (arr) => arr.map(fn);
+
+// [][]number -> []number
+const reduceDigits = mapWith(sumArray);
 
 // number -> number -> number
 export const fftOnce = (len) => pipe(
     calcDigits(len),
     reduceDigits,
-    mapLastDigit,
-    joinDigits,
+    mapWith(lastDigit),
 );
 
-// number -> string -> string
+// number -> []number -> []number
 export const fft = (phases) => (num) => {
   const { length } = num;
   let result = num;
@@ -120,10 +122,11 @@ export const fft = (phases) => (num) => {
   return result;
 };
 
-
+// []string -> string
 export const solve = ([input]) => {
   return pipe(
       fft(100),
       firstEight,
+      joinDigits,
   )(input);
 };
