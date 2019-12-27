@@ -67,7 +67,7 @@ const applyGravity = (bodies) => {
 
 export const reposition = (body) => ({
   ...body,
-  pos: body.pos.map((p, i) => (p += body.vel[i])),
+  pos: body.pos.map((p, i) => p + body.vel[i]),
 });
 
 const applyVelocity = (bodies) => bodies.map(reposition);
