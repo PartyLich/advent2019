@@ -7,3 +7,6 @@ export const pipe = (...fns) => (x) => fns.reduce((acc, f) => f(acc), x);
 
 // number -> number
 export const sum = (a, b) => a + b;
+
+// number -> number
+export const mult = (a, b) => a * b;
