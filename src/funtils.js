@@ -1,12 +1,14 @@
-export const identity = (x) => x;
+// @flow
+export const identity = /* :: <T> */(x /* : T */)/* : T */ => x;
 
-// string -> number
-export const toDecimal = (str) => parseInt(str, 10);
+export const toDecimal = (str/* : string */)/* : number */ => parseInt(str, 10);
 
-export const pipe = (...fns) => (x) => fns.reduce((acc, f) => f(acc), x);
+export const pipe = (...fns /* : Array<function> */) =>
+/* ::<T>*/ (x /* : T*/) => fns.reduce(
+      (acc, f /* : function*/) => f(acc), x,
+  );
+
+export const sum = (a /* : number */, b /* : number */)/* : number */ => a + b;
 
 // number -> number
-export const sum = (a, b) => a + b;
-
-// number -> number
-export const mult = (a, b) => a * b;
+export const mult = (a /* : number */, b /* : number */)/* : number */ => a * b;
