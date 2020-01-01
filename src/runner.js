@@ -3,8 +3,8 @@ import { Writable } from 'stream';
 
 import { xForm } from './1';
 import { inpFilter } from './3';
-import { inpMap } from './6';
-import { solve } from './6.2';
+import { parseLine as inpMap } from './24';
+import { solve } from './24';
 
 // read filename from stdin; exit if not provided
 const [fname] = process.argv.slice(2);
