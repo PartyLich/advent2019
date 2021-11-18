@@ -16,16 +16,16 @@
     "client": "NODE_ENV=production webpack --progress",
     "dev": "webpack --watch --progress & npm run watch",
     "serve": "node dist/index.js",
-    "test": "tape -r esm src/**/*.test.js test/**/*.test.js",
+    "test": "tape -r esm src/**/*.test.js test/**/*.test.js | tap-summary",
     "lint": "eslint ./src && echo Lint Complete",
     "lint:fix": "eslint ./src --fix && echo Lint Complete",
     "flow": "flow",
+    "types": "flow",
     "verify": "npm run -s test && flow && npm run -s lint",
-    "watch:flow": "watch -t 'npx flow'",
-    "watch:lint": "watch 'npm run lint'",
-    "watch:server": "nodemon -r esm src/index.js",
-    "watch:source": "watch 'clear && npm run verify' src test",
-    "watch": "npm run watch:server & npm run watch:source"
+    "watch:types": "chokidar \"src/*.js\" -c \"npm run types\"",
+    "watch:lint": "chokidar -c \"npm run lint\"",
+    "watch:source": "chokidar \"src\" -c \"clear && npm run verify\"",
+    "watch": "npm run watch:source"
   },
   "husky": {
     "hooks": {
@@ -42,6 +42,7 @@
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-flow": "^7.7.4",
     "babel-eslint": "^10.0.3",
+    "chokidar-cli": "^2.1.0",
     "eslint": "^6.8.0",
     "eslint-config-partylich": "^0.1.1",
     "eslint-plugin-flowtype": "^4.5.2",
@@ -49,7 +50,7 @@
     "flow-bin": "^0.114.0",
     "husky": "^3.1.0",
     "nodemon": "^1.19.4",
-    "tape": "^4.11.0",
-    "watch": "^1.0.2"
+    "tap-summary": "^4.0.0",
+    "tape": "^4.11.0"
   }
 }
