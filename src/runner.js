@@ -2,9 +2,7 @@ import fs from 'fs';
 import { Writable } from 'stream';
 
 import { xForm } from './1';
-import { inpFilter } from './3';
-import { parseAction as inpMap } from './22';
-import { solve } from './22';
+import { inpFilter, inpMap, solve } from './3.2';
 
 // read filename from stdin; exit if not provided
 const [fname] = process.argv.slice(2);
