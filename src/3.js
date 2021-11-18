@@ -28,7 +28,7 @@ export const makeSegment = (magnitude = 0, isVert = true, last = [0, 0]) => {
 };
 
 // array -> object
-const toSegments = (wire = []) => {
+export const toSegments = (wire = []) => {
   const horz = [];
   const vert = [];
   const last = [0, 0];
@@ -66,7 +66,8 @@ const toSegments = (wire = []) => {
 export const inRange = (i, { start, end }) =>
   i >= Math.min(start, end) && i <= Math.max(start, end);
 
-const ascending = (a, b) => a - b;
+// ascending sort comparator
+export const ascending = (a, b) => a - b;
 // * -> bool
 const notZero = (val) => val !== 0;
 
