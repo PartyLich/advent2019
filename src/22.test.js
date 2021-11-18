@@ -84,7 +84,7 @@ test('22: parseDeal', (t) => {
   t.end();
 });
 
-test('22: ', (t) => {
+test('22: parseAction', (t) => {
   {
     const msg = 'returns array pair ["cut", number]';
     const expected = ['cut', 6];
@@ -107,7 +107,7 @@ test('22: ', (t) => {
   t.end();
 });
 
-test('22: ', (t) => {
+test('22: deckReducer', (t) => {
   {
     const msg = 'defaults to empty array';
     const expected = [];
@@ -121,7 +121,7 @@ test('22: ', (t) => {
     t.deepEqual(actual, expected, msg);
   }
   {
-    const msg = '';
+    const msg = 'reduces action list to new deck state';
     const actions = [
       'cut 6',
       'deal with increment 7',
@@ -132,7 +132,7 @@ test('22: ', (t) => {
     t.deepEqual(actual, expected, msg);
   }
   {
-    const msg = '';
+    const msg = 'reduces action list to new deck state';
     const actions = [
       'deal with increment 7',
       'deal with increment 9',
@@ -143,7 +143,7 @@ test('22: ', (t) => {
     t.deepEqual(actual, expected, msg);
   }
   {
-    const msg = '';
+    const msg = 'reduces action list to new deck state';
     const actions = [
       'deal into new stack',
       'cut -2',
