@@ -7,6 +7,7 @@ import {
 import { inpMap as commaSplit } from './3';
 import { toDecimal } from './funtils';
 
+export { inpFilter } from './3';
 
 // string -> []number
 export const inpMap = (str) => commaSplit(str).map(toDecimal);
@@ -19,7 +20,7 @@ export const parseMode = (instruction) =>
   (Math.floor(instruction / 100) + '').split('').map(toDecimal);
 
 // number -> object
-const parseInstruction = (instruction) => ({
+export const parseInstruction = (instruction) => ({
   opcode: parseOpcode(instruction),
   modes: parseMode(instruction),
 });
@@ -32,13 +33,13 @@ export const mult = (a, b) => curryMult(a)(b);
 const input = () => getInput();
 
 // number -> SIDE EFFECT
-const output = (input) => {
+export const output = (input) => {
   console.log(`[OUTPUT]: ${ input }`);
   return input;
 };
 
 // opcode map
-const OPCODES = {
+export const OPCODES = {
   1: { fn: add, params: 3 },
   2: { fn: mult, params: 3 },
   3: { fn: input, params: 1 },
@@ -99,7 +100,7 @@ const compute = (OPCODES) => (state = []) => {
 export const computer = compute(OPCODES);
 
 
-// What value is left at position 0 after the program halts?
+// what diagnostic code does the program produce?
 // []number -> number
 export const solve = (input = []) => computer(input.flat())[0];
 
