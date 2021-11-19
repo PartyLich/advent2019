@@ -27,8 +27,10 @@ const OPCODES = {
 // object -> []number -> []number
 const compute = (OPCODES) => (input = []) => {
   let state = input;
-  let pc = 0; // program counter
-  let op; // operation
+  // program counter
+  let pc = 0;
+  // operation
+  let op;
 
   while (op = OPCODES[state[pc]]) {
     state = transition(state, pc, op);

@@ -56,7 +56,8 @@ export const loadArgs = (state) => (modes) => (arg, i) => {
   switch (mode) {
     case IMMEDIATE:
       return arg;
-    case POSITION: // intentional fallthrough
+    case POSITION:
+      // intentional fallthrough
     default:
       return state[arg];
   }
@@ -64,7 +65,7 @@ export const loadArgs = (state) => (modes) => (arg, i) => {
 
 // array, number, function -> array
 export const transition = (state, i, op, modes = []) => {
-  let args = state.slice(i+1, i + 1 + op.params);
+  let args = state.slice(i + 1, i + 1 + op.params);
   const dest = args.slice(-1)[0];
 
   args = args.map(loadArgs(state)(modes));
@@ -77,9 +78,11 @@ export const transition = (state, i, op, modes = []) => {
 
 // object -> []number -> []number
 const compute = (OPCODES) => (state = []) => {
-  let pc = 0; // program counter
+  // program counter
+  let pc = 0;
   let { opcode, modes } = parseInstruction(state[pc]);
-  let op = OPCODES[opcode]; // operation
+  // operation
+  let op = OPCODES[opcode];
 
   while (op.fn) {
     state = transition(state, pc, op, modes);

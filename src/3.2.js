@@ -28,7 +28,7 @@ export const mutateIntersects = (segments) => {
     for (const segH of horz) {
       for (const segV of vert) {
         if (inRange(segH.y, segV) && inRange(segV.x, segH)) {
-          const intersect =[segV.x, segH.y];
+          const intersect = [segV.x, segH.y];
           segH.intersect = (!!segH.intersect)
               ? segH.intersect.concat([intersect])
               : [intersect];
@@ -44,8 +44,8 @@ export const mutateIntersects = (segments) => {
   };
 
   for (let i = 0; i < segments.length - 1; i++) {
-    findIntersects(segments[i].horz, segments[i+1].vert);
-    findIntersects(segments[i+1].horz, segments[i].vert);
+    findIntersects(segments[i].horz, segments[i + 1].vert);
+    findIntersects(segments[i + 1].horz, segments[i].vert);
   }
 
   return intersects;

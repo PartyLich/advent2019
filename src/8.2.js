@@ -39,7 +39,8 @@ export const solve = (input) => {
   const height = 6;
 
   const img = flattenLayers(input.flat(), width, height);
-  console.log(toString(img, width).replace(/0/g, ' ')); // so I can read it in terminal
+  // so I can read it in terminal
+  console.log(toString(img, width).replace(/0/g, ' '));
 
   return toString(img, width);
 };

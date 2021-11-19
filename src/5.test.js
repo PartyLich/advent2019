@@ -111,14 +111,20 @@ test('transition()', (t) => {
     const msg = 'adds and stores';
     const expected = [1, 9, 10, 70, 2, 3, 11, 0, 99, 30, 40, 50];
     const actual = transition(
-        [1, 9, 10, 3, 2, 3, 11, 0, 99, 30, 40, 50], 0, { fn: add, params: 3 });
+        [1, 9, 10, 3, 2, 3, 11, 0, 99, 30, 40, 50],
+        0,
+        { fn: add, params: 3 },
+    );
     t.deepEqual(actual, expected, msg);
   }
   {
     const msg = 'multiplies and stores';
     const expected = [150, 9, 10, 3, 2, 3, 11, 0, 99, 30, 40, 50];
     const actual = transition(
-        [1, 9, 10, 3, 2, 3, 11, 0, 99, 30, 40, 50], 4, { fn: mult, params: 3 });
+        [1, 9, 10, 3, 2, 3, 11, 0, 99, 30, 40, 50],
+        4,
+        { fn: mult, params: 3 },
+    );
     t.deepEqual(actual, expected, msg);
   }
   {

@@ -31,27 +31,23 @@ test('24: getTile()', (t) => {
 test('24: arrCompare', (t) => {
   {
     const msg = 'equal arrs';
-    const actual = arrCompare([1, 2, 3, 4], [1, 2, 3, 4]); // true
-    const expected = true;
-    t.equal(actual, expected, msg);
+    const actual = arrCompare([1, 2, 3, 4], [1, 2, 3, 4]);
+    t.ok(actual, msg);
   }
   {
     const msg = 'different lengths';
-    const actual = arrCompare([1, 2, 3, 4], [1, 2, 3]); // false
-    const expected = false;
-    t.equal(actual, expected, msg);
+    const actual = arrCompare([1, 2, 3, 4], [1, 2, 3]);
+    t.notOk(actual, msg);
   }
   {
     const msg = 'different values';
-    const actual = arrCompare([1, 2, 3, 4], [1, 2, 3, 5]); // false
-    const expected = false;
-    t.equal(actual, expected, msg);
+    const actual = arrCompare([1, 2, 3, 4], [1, 2, 3, 5]);
+    t.notOk(actual, msg);
   }
   {
     const msg = 'different lengths';
-    const actual = arrCompare([1, 2, 3, 4], [1, 2, 3, 4, 5]); // false
-    const expected = false;
-    t.equal(actual, expected, msg);
+    const actual = arrCompare([1, 2, 3, 4], [1, 2, 3, 4, 5]);
+    t.notOk(actual, msg);
   }
 
   t.end();

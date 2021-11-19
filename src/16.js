@@ -70,7 +70,7 @@ export const calcDigits = (len) => (digits) => {
     digits.unshift('0');
   }
 
-  for (let i = 0, len = digits.length; i < len; i++ ) {
+  for (let i = 0, len = digits.length; i < len; i++) {
     const tmp = [];
     let counter = i + 1;
     let node = pattern.head;

@@ -92,8 +92,8 @@ export const solve = (input) => {
 
   for (let i = 0; i < segments.length - 1; i++) {
     intersects = intersects
-        .concat(findIntersects(segments[i].horz, segments[i+1].vert))
-        .concat(findIntersects(segments[i+1].horz, segments[i].vert));
+        .concat(findIntersects(segments[i].horz, segments[i + 1].vert))
+        .concat(findIntersects(segments[i + 1].horz, segments[i].vert));
   }
 
   return intersects

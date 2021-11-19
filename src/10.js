@@ -34,10 +34,10 @@ export const countVertical = (grid) => (x, y) => {
 
   for (let v = 1; v < height; v++) {
     if (!pos && ok(x, y + v)) {
-      pos = (grid[y+v][x]) ? ++sum : 0;
+      pos = (grid[y + v][x]) ? ++sum : 0;
     }
     if (!neg && ok(x, y - v)) {
-      neg = (grid[y-v][x]) ? ++sum : 0;
+      neg = (grid[y - v][x]) ? ++sum : 0;
     }
   }
 

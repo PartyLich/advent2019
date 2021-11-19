@@ -34,9 +34,7 @@ test('3.2: solve()', (t) => {
   }
   {
     const msg = 'example case 2';
-    const input = xForm(
-        'R75,D30,R83,U83,L12,D49,R71,U7,L72\nU62,R66,U55,R34,D71,R55,D58,R83',
-    )
+    const input = xForm('R75,D30,R83,U83,L12,D49,R71,U7,L72\nU62,R66,U55,R34,D71,R55,D58,R83')
         .filter((el) => !!el)
         .map(inpMap);
     const expected = 610;

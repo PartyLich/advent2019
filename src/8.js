@@ -19,7 +19,7 @@ export const checkImage = (len) => (buf) => {
             : 1;
     }
 
-    if (((i+1) % len) === 0) {
+    if (((i + 1) % len) === 0) {
       if (layers[current][0] < min) {
         target = current;
         min = layers[current][0];

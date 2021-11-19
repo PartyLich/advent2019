@@ -38,9 +38,7 @@ test('10v2: trace()', (t) => {
   }
 
   t.end();
-},
-
-);
+});
 test('10v2: solve()', (t) => {
   {
     const input = `......#.#.
