@@ -78,7 +78,7 @@ export const transition = (state, i, op, modes = []) => {
 
 // run program to completion
 // object -> []number -> []number
-const compute = (opcodes) => (state = []) => {
+export const compute = (opcodes) => (state = []) => {
   // program counter
   let pc = 0;
   let { opcode, modes } = parseInstruction(state[pc]);
