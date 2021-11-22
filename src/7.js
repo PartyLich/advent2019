@@ -5,6 +5,9 @@ import {
   compute,
 } from './5.2';
 
+export { inpFilter } from './3';
+export { inpMap } from './5';
+
 
 // create a (lazy) iterator from the provided array
 export const getInput = function* (init = []) {
@@ -68,3 +71,16 @@ export const getPermutations = (cache = {}) => (arr = []) => {
 
 // default: empty cache
 export const permutationFinder = getPermutations({});
+
+// []number -> number
+export const solve = (input = []) => {
+  const program = input.flat();
+  const phasePermutations = permutationFinder([0, 1, 2, 3, 4]);
+
+  // reduce list of phase setting permutations to maximum program output
+  return phasePermutations.reduce(
+      (acc, phaseSettings) =>
+        Math.max(acc, trySettings(program)(phaseSettings)),
+      -1,
+  );
+};
