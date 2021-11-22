@@ -32,7 +32,7 @@ const makeOpcodes = (inputFn, outputFn) => Object.assign(OPCODES, {
 export const trySettings = (program) => (phaseSettings) => phaseSettings.reduce(
     (output, phase) => {
       const inputList = [phase, output];
-      const inputIter = getInput(inputList);
+      const inputIter = inputList[Symbol.iterator]();
       // run program to completion
       compute(makeOpcodes(
           () => inputIter.next().value,
