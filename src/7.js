@@ -43,3 +43,28 @@ export const trySettings = (program) => (phaseSettings) => phaseSettings.reduce(
     },
     0,
 );
+
+// returns list of array permutations
+// object -> []any -> [][]any
+export const getPermutations = (cache = {}) => (arr = []) => {
+  if (arr.length <= 1) return arr;
+
+  if (cache[JSON.stringify(arr)] === undefined) {
+    const result = [];
+    for (let i = 0; i < arr.length; i++) {
+      const first = arr.slice(i, i + 1);
+      const rest = arr.slice(0, i).concat(arr.slice(i + 1));
+      const permutations = getPermutations(cache)(rest);
+      for (const permute of permutations) {
+        result.push(first.concat(permute));
+      }
+    }
+
+    cache[JSON.stringify(arr)] = result;
+  }
+
+  return cache[JSON.stringify(arr)];
+};
+
+// default: empty cache
+export const permutationFinder = getPermutations({});

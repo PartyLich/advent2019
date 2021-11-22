@@ -3,6 +3,7 @@ import test from 'tape';
 import {
   getInput,
   trySettings,
+  getPermutations,
 } from './7';
 
 
@@ -58,6 +59,31 @@ test('7: trySettings()', (t) => {
     const phases = [1, 0, 4, 3, 2];
     const actual = trySettings(program)(phases);
     t.equal(actual, expected, msg);
+  }
+  t.end();
+});
+
+test('7: getPermutations()', (t) => {
+  {
+    const msg = 'returns list of array permutations';
+    const expected = [
+      [0, 1, 2],
+      [0, 2, 1],
+      [1, 0, 2],
+      [1, 2, 0],
+      [2, 0, 1],
+      [2, 1, 0],
+    ];
+    const actual = getPermutations({})([0, 1, 2]);
+    const THREE_FACTORIAL = 6;
+    t.equal(actual.length, THREE_FACTORIAL, msg);
+    t.deepEqual(actual, expected, msg);
+  }
+  {
+    const msg = 'returns list with n! length';
+    const actual = getPermutations({})([0, 1, 2, 3, 4]);
+    const FIVE_FACTORIAL = 120;
+    t.equal(actual.length, FIVE_FACTORIAL, msg);
   }
   t.end();
 });
