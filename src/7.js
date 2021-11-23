@@ -21,7 +21,7 @@ export const getInput = function* (init = []) {
 
 // set up opcodes with the specified input and output fns
 // (ie supply the effectful computations)
-const makeOpcodes = (inputFn, outputFn) => Object.assign(OPCODES, {
+export const makeOpcodes = (inputFn, outputFn) => Object.assign(OPCODES, {
   3: { fn: inputFn, params: 1 },
   4: { fn: outputFn, params: 1 },
 });
