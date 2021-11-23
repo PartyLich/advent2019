@@ -3,7 +3,10 @@
 // part 2
 import { add, OPCODES, parseInstruction } from './5';
 import { transition } from './5.2';
-import { makeOpcodes } from './7';
+import { makeOpcodes, permutationFinder } from './7';
+
+export { inpFilter } from './3';
+export { inpMap } from './5';
 
 
 // returns an Iterable over computer state
@@ -50,7 +53,7 @@ export const computer = (opcodes) => ({ state: program = [], pc = 0 } = {}) => {
 // []number -> []number -> number -> number
 export const trySettings = (program) => (phaseSettings) =>
   (initialInput = 0) => {
-    const amps = Array(phaseSettings.length);
+    const amps = Array(phaseSettings.length).fill({ state: program });
     const phaseIter = phaseSettings[Symbol.iterator]();
 
     // run amp loop to completion
@@ -72,7 +75,7 @@ export const trySettings = (program) => (phaseSettings) =>
               output = value;
               lastOutput = value;
             },
-        ))(amp ? amp : { state: program });
+        ))(amp);
 
         // run amp until output or HALT
         output = null;
@@ -89,3 +92,17 @@ export const trySettings = (program) => (phaseSettings) =>
 
     return lastOutput;
   };
+
+// []number -> number
+export const solve = (input = []) => {
+  const PHASE_OPTIONS = [5, 6, 7, 8, 9];
+  const program = input.flat();
+  const phasePermutations = permutationFinder(PHASE_OPTIONS);
+
+  // reduce list of phase setting permutations to maximum program output
+  return phasePermutations.reduce(
+      (acc, phaseSettings) =>
+        Math.max(acc, trySettings(program)(phaseSettings)()),
+      -Infinity,
+  );
+};
