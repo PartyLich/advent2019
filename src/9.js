@@ -2,10 +2,16 @@
 // Day 9: Sensor Boost
 import {
   add,
+  parseInstruction,
+  parseOpcode,
+  parseMode,
 } from './5';
 import {
   OPCODES as PREV_OPCODES,
 } from './5.2';
+
+export { inpFilter } from './3';
+export { inpMap } from './5';
 
 
 // type Operation {
@@ -108,4 +114,39 @@ export const transition = (state = {}, op = {}, modes = []) => {
         rb,
       };
   }
+};
+
+// run program to completion
+// object -> []number -> []number
+export const compute = (opcodes) => (state = {}) => {
+  let { opcode, modes } = parseInstruction(state.mem[state.pc]);
+  let op = opcodes[opcode];
+
+  while (op.fn) {
+    const nextState = transition(state, op, modes);
+    state = nextState;
+    opcode = parseOpcode(state.mem[state.pc]);
+    modes = parseMode(state.mem[state.pc]);
+    op = opcodes[opcode];
+  }
+
+  return state;
+};
+
+// The BOOST program will ask for a single input; run it in test mode by
+// providing it the value 1.
+const testMode = () => 1;
+
+// what diagnostic code does the program produce?
+// []number -> number
+export const solve = (input = []) => {
+  const program = input.flat();
+  let output;
+
+  compute(makeOpcodes(
+      testMode,
+      (value) => output = value,
+  ))(Computer(program));
+
+  return output;
 };
