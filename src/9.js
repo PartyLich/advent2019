@@ -1,6 +1,9 @@
 // Advent of Code 2019
 // Day 9: Sensor Boost
 import {
+  add,
+} from './5';
+import {
   OPCODES as PREV_OPCODES,
 } from './5.2';
 
@@ -63,3 +66,46 @@ export const loadArgs = ({ mem = [], rb = 0 } = {}) => (modes = []) =>
         return mem[arg] || 0;
     }
   };
+
+// returns the next state and next PC (if the PC was updated)
+// (Computer, Operation, []number) -> [[]number, number]
+export const transition = (state = {}, op = {}, modes = []) => {
+  let { pc, mem, rb } = state;
+  let args = mem.slice(pc + 1, pc + 1 + op.params);
+
+  let dest = args.slice(-1)[0];
+  if ((modes[modes.length - 1 - (op.params - 1)] || 0) === RELATIVE) {
+    // relative mode write destination
+    dest += state.rb;
+  }
+
+  args = args.map(loadArgs(state)(modes));
+
+  const result = op.fn(...args);
+  pc = add(pc, op.params + 1);
+  switch (op) {
+    case OPCODES[4]:
+      return { mem, pc, rb };
+
+    case OPCODES[5]:
+      // intentional fallthrough
+    case OPCODES[6]:
+      return {
+        mem,
+        pc: (result !== null) ? result : pc,
+        rb,
+      };
+
+    case OPCODES[9]:
+      return { mem, pc, rb: rb + result };
+
+    default:
+      const nextMem = mem.slice();
+      nextMem[dest] = result;
+      return {
+        mem: nextMem,
+        pc,
+        rb,
+      };
+  }
+};
