@@ -58,7 +58,7 @@ export const trySettings = (program) => (phaseSettings) =>
 
     // run amp loop to completion
     let done = false;
-    let output = 0;
+    let output = initialInput;
     let lastOutput;
     while (!done) {
       for (const [i, amp] of amps.entries()) {
