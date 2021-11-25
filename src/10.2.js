@@ -83,3 +83,21 @@ export const sortByDistance = (map) =>
       },
       {},
   );
+
+// get ordered list of asteroid slopes relative to the station
+const getSlopeList = (slopeMap) => {
+  const rightSet = new Set();
+  const leftSet = new Set();
+  for (const slope of Object.keys(slopeMap)) {
+    if (slope === 'above' || slope == 'below') continue;
+
+    if (slopeMap[slope].left.length) leftSet.add(slope);
+    if (slopeMap[slope].right.length) rightSet.add(slope);
+  }
+  const rightSlopes = [...rightSet];
+  const leftSlopes = [...leftSet];
+  rightSlopes.sort(asc);
+  leftSlopes.sort(asc);
+
+  return ['above', ...rightSlopes, 'below', ...leftSlopes];
+};
