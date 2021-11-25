@@ -3,14 +3,17 @@
 // Rewrite
 import { sum } from './funtils';
 
+export { inpFilter } from './3';
+export { inpMap } from './10';
+
 
 // string -> obj -> obj -> bool
 const isAligned = (dir) => (pt) =>
   (node) => (node != pt) && (pt[dir] === node[dir]);
-const isVert = isAligned('x');
+export const isVert = isAligned('x');
 // const isHorz = isAligned('y');
 
-const slope = (ptA) => (ptB) => (ptB.y - ptA.y) / (ptB.x - ptA.x);
+export const slope = (ptA) => (ptB) => (ptB.y - ptA.y) / (ptB.x - ptA.x);
 const above = (ptA) => (ptB) => ptB.y < ptA.y;
 const below = (ptA) => (ptB) => ptB.y > ptA.y;
 
