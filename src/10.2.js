@@ -26,8 +26,14 @@ export const eq = (a) => (b) => a.x === b.x && a.y === b.y;
 export const distance = (ptA) => (ptB) =>
   (ptB.y - ptA.y) ** 2 + (ptB.x - ptA.x) ** 2;
 
+const ABOVE = 'above';
+const BELOW = 'below';
+const LEFT = 'left';
+const RIGHT = 'right';
+
 // SlopeMap {
 //    above: []{ pt: Point, distance: number },
+//    below: []{ pt: Point, distance: number },
 //    [string]: {
 //      right: []{ pt: Point, distance: number },
 //      left: []{ pt: Point, distance: number },
@@ -42,10 +48,10 @@ export const slopeMap = (pt) => (nodes) => nodes.reduce(
       let _slope;
       let side;
       if (isVert(pt)(node)) {
-        _slope = (pt.y < node.y) ? 'below' : 'above';
+        _slope = (pt.y < node.y) ? BELOW : ABOVE;
       } else {
         _slope = slope(pt)(node);
-        side = (pt.x < node.x) ? 'right' : 'left';
+        side = (pt.x < node.x) ? RIGHT : LEFT;
       }
 
       const key = _slope;
@@ -71,11 +77,13 @@ export const slopeMap = (pt) => (nodes) => nodes.reduce(
 // distance ascending sort comparator
 const distanceAsc = (a, b) => asc(a.distance, b.distance);
 
+const isAboveOrBelow = (key) => key === ABOVE || key === BELOW;
+
 // sort nodes in slope map by distance
 export const sortByDistance = (map) =>
   Object.entries(map).reduce(
       (acc, [key, val]) => {
-        if (key === 'above' || key === 'below') {
+        if (isAboveOrBelow(key)) {
           acc[key] = val.sort(distanceAsc);
         } else {
           acc[key] = {
@@ -94,7 +102,7 @@ const getSlopeList = (slopeMap) => {
   const rightSet = new Set();
   const leftSet = new Set();
   for (const slope of Object.keys(slopeMap)) {
-    if (slope === 'above' || slope == 'below') continue;
+    if (isAboveOrBelow(slope)) continue;
 
     if (slopeMap[slope].left.length) leftSet.add(slope);
     if (slopeMap[slope].right.length) rightSet.add(slope);
@@ -104,24 +112,25 @@ const getSlopeList = (slopeMap) => {
   rightSlopes.sort(asc);
   leftSlopes.sort(asc);
 
-  return ['above', ...rightSlopes, 'below', ...leftSlopes];
+  return [ABOVE, ...rightSlopes, BELOW, ...leftSlopes];
 };
 
 // return the ideal station location
 const getStation = (grid) => solve10(grid).pt;
 
+const sortedSlopeMap = (station) => pipe(
+    slopeMap(station),
+    sortByDistance,
+);
+
 // return the 200th asteroid to be vaporized's (X coord * 100 + Y coord)
 export const solve = (grid) => {
   // create node/meteor list
   const station = getStation(grid);
-  const nodes = mapNodes(grid);
-  const asteroids = nodes.filter(not(eq(station)));
+  const asteroids = mapNodes(grid).filter(not(eq(station)));
 
   // organize slope and distance information
-  const map = pipe(
-      slopeMap(station),
-      sortByDistance,
-  )(asteroids);
+  const map = sortedSlopeMap(station)(asteroids);
   const slopeList = getSlopeList(map);
 
   // vaporized asteroid sequence number
@@ -135,7 +144,7 @@ export const solve = (grid) => {
     const slope = slopeList[idx];
     idx = (idx + 1) % slopeList.length;
 
-    if (slope === 'above' || slope === 'below') {
+    if (isAboveOrBelow(slope)) {
       // toggle side
       right = !right;
 
@@ -144,7 +153,7 @@ export const solve = (grid) => {
       // take the first asteroid in the list
       vaporized.push(map[slope].shift());
     } else {
-      const side = (right) ? 'right' : 'left';
+      const side = (right) ? RIGHT : LEFT;
       if (!map[slope][side].length) continue;
 
       vaporized.push(map[slope][side].shift());
