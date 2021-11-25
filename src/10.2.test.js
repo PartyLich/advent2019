@@ -5,6 +5,7 @@ import {
   eq,
   distance,
   slopeMap,
+  sortByDistance,
 } from './10.2';
 
 
@@ -52,6 +53,37 @@ test('10.2: slopeMap()', (t) => {
       '0.5': { right: [{ pt: { x: 2, y: 1 }, distance: 5 }], left: [] },
     };
     const actual = slopeMap({ x: 0, y: 0 })(mapNodes(grid));
+    t.deepEqual(actual, expected, msg);
+  }
+  t.end();
+});
+
+test('10.2: sortByDistance()', (t) => {
+  const grid = [
+    [0, 0, 1],
+    [1, 1, 1],
+    [1, 0, 1],
+  ];
+  {
+    const msg = 'sorts slopeMap nodes by distance';
+    const expected = {
+      'above': [],
+      'below': [
+        { pt: { x: 0, y: 1 }, distance: 1 },
+        { pt: { x: 0, y: 2 }, distance: 4 },
+      ],
+      '0': { right: [{ pt: { x: 2, y: 0 }, distance: 4 }], left: [] },
+      '1': {
+        right: [
+          { pt: { x: 1, y: 1 }, distance: 2 },
+          { pt: { x: 2, y: 2 }, distance: 8 },
+        ],
+        left: [],
+      },
+      '0.5': { right: [{ pt: { x: 2, y: 1 }, distance: 5 }], left: [] },
+    };
+    const map = slopeMap({ x: 0, y: 0 })(mapNodes(grid));
+    const actual = sortByDistance(map);
     t.deepEqual(actual, expected, msg);
   }
   t.end();

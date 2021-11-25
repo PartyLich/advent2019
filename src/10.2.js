@@ -1,6 +1,7 @@
 // Advent of Code 2019
 // Day 10: Monitoring Station
 // Part 2
+import { asc } from './funtils';
 import {
   isVert,
   slope,
@@ -61,3 +62,24 @@ export const slopeMap = (pt) => (nodes) => nodes.reduce(
     },
     { above: [], below: [] },
 );
+
+// distance ascending sort comparator
+const distanceAsc = (a, b) => asc(a.distance, b.distance);
+
+// sort nodes in slope map by distance
+export const sortByDistance = (map) =>
+  Object.entries(map).reduce(
+      (acc, [key, val]) => {
+        if (key === 'above' || key === 'below') {
+          acc[key] = val.sort(distanceAsc);
+        } else {
+          acc[key] = {
+            right: val.right.sort(distanceAsc),
+            left: val.left.sort(distanceAsc),
+          };
+        }
+
+        return acc;
+      },
+      {},
+  );
