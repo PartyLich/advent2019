@@ -16,7 +16,7 @@
     "client": "NODE_ENV=production webpack --progress",
     "dev": "webpack --watch --progress & npm run watch",
     "serve": "node dist/index.js",
-    "test": "tape -r esm src/**/*.test.js test/**/*.test.js | tap-summary",
+    "test": "tape -r esm \"src/**/*.test.js\" \"test/**/*.test.js\" | tap-summary",
     "lint": "eslint ./src && echo Lint Complete",
     "lint:fix": "eslint ./src --fix && echo Lint Complete",
     "flow": "flow",
