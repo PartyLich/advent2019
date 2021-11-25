@@ -1,11 +1,16 @@
 // Advent of Code 2019
 // Day 10: Monitoring Station
 // Part 2
-import { asc } from './funtils';
+import { asc, not, pipe } from './funtils';
 import {
   isVert,
+  mapNodes,
   slope,
+  solve as solve10,
 } from './10v2';
+
+export { inpFilter } from './3';
+export { inpMap } from './10';
 
 
 // Point {
@@ -100,4 +105,53 @@ const getSlopeList = (slopeMap) => {
   leftSlopes.sort(asc);
 
   return ['above', ...rightSlopes, 'below', ...leftSlopes];
+};
+
+// return the ideal station location
+const getStation = (grid) => solve10(grid).pt;
+
+// return the 200th asteroid to be vaporized's (X coord * 100 + Y coord)
+export const solve = (grid) => {
+  // create node/meteor list
+  const station = getStation(grid);
+  const nodes = mapNodes(grid);
+  const asteroids = nodes.filter(not(eq(station)));
+
+  // organize slope and distance information
+  const map = pipe(
+      slopeMap(station),
+      sortByDistance,
+  )(asteroids);
+  const slopeList = getSlopeList(map);
+
+  // vaporized asteroid sequence number
+  const TARGET_NUM = 200;
+
+  // ordered list of vaporized asteroids
+  const vaporized = [];
+  let idx = 0;
+  let right = false;
+  while (vaporized.length < TARGET_NUM && vaporized.length < asteroids.length) {
+    const slope = slopeList[idx];
+    idx = (idx + 1) % slopeList.length;
+
+    if (slope === 'above' || slope === 'below') {
+      // toggle side
+      right = !right;
+
+      if (!map[slope].length) continue;
+
+      // take the first asteroid in the list
+      vaporized.push(map[slope].shift());
+    } else {
+      const side = (right) ? 'right' : 'left';
+      if (!map[slope][side].length) continue;
+
+      vaporized.push(map[slope][side].shift());
+    }
+  }
+
+  const target = vaporized[TARGET_NUM - 1] && vaporized[TARGET_NUM - 1].pt;
+
+  return (target.x * 100) + target.y;
 };

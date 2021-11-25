@@ -1,11 +1,13 @@
 import test from 'tape';
 
+import { inpMap } from './10';
 import { mapNodes } from './10v2';
 import {
   eq,
   distance,
   slopeMap,
   sortByDistance,
+  solve,
 } from './10.2';
 
 
@@ -86,5 +88,36 @@ test('10.2: sortByDistance()', (t) => {
     const actual = sortByDistance(map);
     t.deepEqual(actual, expected, msg);
   }
+  t.end();
+});
+
+test('10.2: solve()', (t) => {
+  {
+    const input = `.#..##.###...#######
+##.############..##.
+.#.######.########.#
+.###.#######.####.#.
+#####.##.#.##.###.##
+..#####..#.#########
+####################
+#.####....###.#.#.##
+##.#################
+#####.##.###..####..
+..######..##.#######
+####.##.####...##..#
+.#####..#.######.###
+##...#.##########...
+#.##########.#######
+.####.#.###.###.#.##
+....##.##.###..#####
+.#.#.###########.###
+#.#.#.#####.####.###
+###.##.####.##.#..##`;
+    const msg = 'large ex with station at { x: 11, y: 13 }';
+    const expected = 8 * 100 + 2;
+    const actual = solve(input.split('\n').map(inpMap));
+    t.deepEqual(actual, expected, msg);
+  }
+
   t.end();
 });
