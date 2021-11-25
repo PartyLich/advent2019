@@ -2,7 +2,7 @@
 // Day 3: Crossed Wires
 
 // * -> bool
-export const inpFilter = (el) => true;
+export const inpFilter = () => true;
 
 // string -> []string
 export const inpMap = (str) => str.split(',');
