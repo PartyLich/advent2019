@@ -67,3 +67,26 @@ export const concat = (ptA) => (ptB) => ({
   x: ptA.x + ptB.x,
   y: ptA.y + ptB.y,
 });
+
+// robot turning directions. always 90degrees
+// type Direction = LEFT | RIGHT
+export const LEFT = 0;
+export const RIGHT = 1;
+
+// turn a vector 90 degrees in the specified direction
+// Point -> Direction -> Point
+export const turn = (turnDir) => (currentVector) => {
+  switch (turnDir) {
+    case LEFT:
+      return {
+        x: -currentVector.y,
+        y: currentVector.x,
+      };
+
+    case RIGHT:
+      return {
+        x: currentVector.y,
+        y: -currentVector.x,
+      };
+  }
+};

@@ -5,6 +5,9 @@ import {
   makeGen,
   Point,
   concat,
+  turn,
+  LEFT,
+  RIGHT,
 } from './11';
 
 
@@ -122,6 +125,31 @@ test('11: Point concat()', (t) => {
   {
     const expected = { x: -20, y: 21 };
     const actual = concat({ x: 30, y: -21 })({ x: -50, y: 42 });
+    t.deepEqual(actual, expected, msg);
+  }
+  t.end();
+});
+
+test('11: turn()', (t) => {
+  const msg = 'rotates a 2d vector by 90 degrees';
+  {
+    const expected = { x: -1, y: 0 };
+    const actual = turn(LEFT)({ x: 0, y: 1 });
+    t.deepEqual(actual, expected, msg);
+  }
+  {
+    const expected = { x: 1, y: -0 };
+    const actual = turn(RIGHT)({ x: 0, y: 1 });
+    t.deepEqual(actual, expected, msg);
+  }
+  {
+    const expected = { x: -0, y: 1 };
+    const actual = turn(LEFT)({ x: 1, y: 0 });
+    t.deepEqual(actual, expected, msg);
+  }
+  {
+    const expected = { x: 0, y: -1 };
+    const actual = turn(RIGHT)({ x: 1, y: 0 });
     t.deepEqual(actual, expected, msg);
   }
   t.end();
