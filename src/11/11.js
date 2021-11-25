@@ -61,3 +61,9 @@ export const makeGen = function* ({ mem = [], pc = 0, rb = 0 } = {}) {
 };
 
 export const Point = (x, y) => ({ x, y });
+
+// concat for Point type
+export const concat = (ptA) => (ptB) => ({
+  x: ptA.x + ptB.x,
+  y: ptA.y + ptB.y,
+});

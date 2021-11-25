@@ -4,6 +4,7 @@ import { Computer } from '../9';
 import {
   makeGen,
   Point,
+  concat,
 } from './11';
 
 
@@ -106,6 +107,21 @@ test('11: Point constructor()', (t) => {
   {
     const expected = { x: -20, y: 21 };
     const actual = Point(-20, 21);
+    t.deepEqual(actual, expected, msg);
+  }
+  t.end();
+});
+
+test('11: Point concat()', (t) => {
+  const msg = 'joins two Point instances';
+  {
+    const expected = { x: 1, y: 1 };
+    const actual = concat({ x: 0, y: 0 })({ x: 1, y: 1 });
+    t.deepEqual(actual, expected, msg);
+  }
+  {
+    const expected = { x: -20, y: 21 };
+    const actual = concat({ x: 30, y: -21 })({ x: -50, y: 42 });
     t.deepEqual(actual, expected, msg);
   }
   t.end();
