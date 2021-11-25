@@ -3,6 +3,7 @@ import test from 'tape';
 import { Computer } from '../9';
 import {
   makeGen,
+  Point,
 } from './11';
 
 
@@ -91,6 +92,21 @@ test('11: generator', (t) => {
     }
 
     t.equal(actual, expected, msg);
+  }
+  t.end();
+});
+
+test('11: Point constructor()', (t) => {
+  const msg = 'creates a Point instance (with zero validation OMG)';
+  {
+    const expected = { x: 1, y: 1 };
+    const actual = Point(1, 1);
+    t.deepEqual(actual, expected, msg);
+  }
+  {
+    const expected = { x: -20, y: 21 };
+    const actual = Point(-20, 21);
+    t.deepEqual(actual, expected, msg);
   }
   t.end();
 });

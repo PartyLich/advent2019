@@ -30,32 +30,34 @@ export const makeGen = function* ({ mem = [], pc = 0, rb = 0 } = {}) {
       (value) => outputBuf.push(value),
   );
 
-  while (true) {
-    let { opcode, modes } = parseInstruction(state.mem[state.pc]);
-    let op = opcodes[opcode];
+  let { opcode, modes } = parseInstruction(state.mem[state.pc]);
+  let op = opcodes[opcode];
 
-    while (op.fn) {
-      if (op === OPCODES[INPUT]) {
-        // yield same state until we get input (e.g. Block)
-        while (input === undefined) {
-          input = yield [state, undefined];
-        }
-        inputBuf.push(input);
-        input = undefined;
+
+  while (op.fn) {
+    if (op === OPCODES[INPUT]) {
+      // yield same state until we get input (e.g. Block)
+      while (input === undefined) {
+        // input = yield [state, outputBuf.shift()];
+        input = yield [state, undefined];
       }
-
-      state = transition(state, op, modes);
-
-      if (op === OPCODES[OUTPUT]) {
-        // yield that output baby
-        input = yield [state, outputBuf.shift()];
-      }
-
-      opcode = parseOpcode(state.mem[state.pc]);
-      modes = parseMode(state.mem[state.pc]);
-      op = opcodes[opcode];
+      inputBuf.push(input);
+      input = undefined;
     }
 
-    return [state, outputBuf.shift()];
+    state = transition(state, op, modes);
+
+    if (op === OPCODES[OUTPUT]) {
+      // yield that output baby
+      input = yield [state, outputBuf.shift()];
+    }
+
+    opcode = parseOpcode(state.mem[state.pc]);
+    modes = parseMode(state.mem[state.pc]);
+    op = opcodes[opcode];
   }
+
+  return [state, outputBuf.shift()];
 };
+
+export const Point = (x, y) => ({ x, y });
