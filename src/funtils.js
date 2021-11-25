@@ -20,3 +20,7 @@ export const asc = (a /* : number */, b /* : number */) => a - b;
 
 // descending sort comparator
 export const desc = (a /* : number */, b /* : number */) => b - a;
+
+// negate a predicate
+export const not = /* ::<T> */(predicate /* : (T) => bool */) =>
+  (value /* : T */) => !predicate(value);
