@@ -14,3 +14,13 @@ export const sum = (a /* : number */, b /* : number */)/* : number */ => a + b;
 
 // (number, number) -> number
 export const mult = (a /* : number */, b /* : number */)/* : number */ => a * b;
+
+// ascending sort comparator
+export const asc = (a /* : number */, b /* : number */) => a - b;
+
+// descending sort comparator
+export const desc = (a /* : number */, b /* : number */) => b - a;
+
+// negate a predicate
+export const not = /* ::<T> */(predicate /* : (T) => bool */) =>
+  (value /* : T */) => !predicate(value);
