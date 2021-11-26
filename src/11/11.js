@@ -5,6 +5,7 @@ import {
   OPCODES,
   makeOpcodes,
   transition,
+  Computer,
 } from '../9';
 
 
@@ -38,7 +39,6 @@ export const makeGen = function* ({ mem = [], pc = 0, rb = 0 } = {}) {
     if (op === OPCODES[INPUT]) {
       // yield same state until we get input (e.g. Block)
       while (input === undefined) {
-        // input = yield [state, outputBuf.shift()];
         input = yield [state, undefined];
       }
       inputBuf.push(input);
@@ -89,4 +89,44 @@ export const turn = (turnDir) => (currentVector) => {
         y: -currentVector.x,
       };
   }
+};
+
+// pseudo hashing fn for objects
+const toKey = (obj) => JSON.stringify(obj);
+
+// hull panel colors
+// type Color = BLACK | WHITE
+const BLACK = 0;
+// const WHITE = 1;
+
+// how many panels are painted at least once?
+// []number -> number
+export const solve = (input = []) => {
+  const robot = makeGen(Computer(input.flat()));
+  const panels = {};
+  let vector = Point(0, 1);
+  let position = Point(0, 0);
+  let key = toKey(position);
+
+  let next = robot.next();
+  while (!next.done) {
+    let [, color] = next.value;
+    if (color === undefined) {
+      // expecting input
+      const panel = panels[key] || BLACK;
+      next = robot.next(panel);
+      color = next.value[1];
+    }
+    panels[key] = color;
+
+    // update robot position
+    const [, dir] = robot.next().value;
+    vector = turn(dir)(vector);
+    position = concat(position)(vector);
+    key = toKey(position);
+
+    next = robot.next();
+  }
+
+  return Object.keys(panels).length;
 };
