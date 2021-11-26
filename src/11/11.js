@@ -60,7 +60,7 @@ export const makeGen = function* ({ mem = [], pc = 0, rb = 0 } = {}) {
   return [state, outputBuf.shift()];
 };
 
-export const Point = (x, y) => ({ x, y });
+export const Point = (x = 0, y = 0) => ({ x, y });
 
 // concat for Point type
 export const concat = (ptA) => (ptB) => ({
@@ -92,11 +92,11 @@ export const turn = (turnDir) => (currentVector) => {
 };
 
 // pseudo hashing fn for objects
-const toKey = (obj) => JSON.stringify(obj);
+export const toKey = (obj) => JSON.stringify(obj);
 
 // hull panel colors
 // type Color = BLACK | WHITE
-const BLACK = 0;
+export const BLACK = 0;
 // const WHITE = 1;
 
 // how many panels are painted at least once?
