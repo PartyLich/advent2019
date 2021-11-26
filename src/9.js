@@ -73,8 +73,9 @@ export const loadArgs = ({ mem = [], rb = 0 } = {}) => (modes = []) =>
     }
   };
 
-// returns the next state and next PC (if the PC was updated)
-// (Computer, Operation, []number) -> [[]number, number]
+// given a Computer state, Operation, and mode list
+//   returns the next Computer state
+// (Computer, Operation, []number) -> Computer
 export const transition = (state = {}, op = {}, modes = []) => {
   let { pc, mem, rb } = state;
   let args = mem.slice(pc + 1, pc + 1 + op.params);
