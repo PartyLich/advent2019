@@ -4,6 +4,9 @@
 import { pipe } from './funtils';
 import { stepOnce } from './12';
 
+export { inpFilter } from './3';
+export { inpMap } from './12';
+
 
 // array equality. Check nested objects by reference (although we only have
 // primitives in this specific usage)
@@ -71,10 +74,17 @@ export const lcm = (a, b) => {
   return lcm;
 };
 
+// find the LCM of a list of numbers
+const nLcm = (arr) => arr.reduce(lcm);
+
 // find LCM of state repeat intervals for each dimension
 // I didnt come up with the necessary idea. After a bunch of time reading N-body
 // problem wiki pages and determining what I remember about differential
 // equations from over a decade ago (to whit: not enough to be usable), I gave
 // up and found this
 // [tip/explanation](https://www.reddit.com/r/adventofcode/comments/e9jxh2/comment/far9cgu/?utm_source=reddit&utm_medium=web2x&context=3)
-export const solve = pipe(getIntervals);
+// []Body -> number
+export const solve = pipe(
+    getIntervals,
+    nLcm,
+);
