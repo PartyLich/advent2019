@@ -7,6 +7,9 @@ import {
   mult,
 } from './funtils';
 
+export { inpFilter } from './3';
+
+
 const makeBody = (
     x = 0, y = 0, z = 0,
     dX = 0, dY = 0, dZ = 0,
