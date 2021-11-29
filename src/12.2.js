@@ -50,6 +50,27 @@ const getIntervals = (bodies) => {
   return intervals;
 };
 
+// find least common multiple of a pair of numbers
+// (number, number) -> number
+export const lcm = (a, b) => {
+  if (a === 0 || b === 0) {
+    return 0;
+  }
+
+  const min = Math.min(a, b);
+  const max = Math.max(a, b);
+  if (max % min === 0) {
+    return max;
+  }
+
+  let lcm = max;
+  while (lcm % min !== 0) {
+    lcm += max;
+  }
+
+  return lcm;
+};
+
 // find LCM of state repeat intervals for each dimension
 // I didnt come up with the necessary idea. After a bunch of time reading N-body
 // problem wiki pages and determining what I remember about differential
