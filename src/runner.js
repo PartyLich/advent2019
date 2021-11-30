@@ -6,7 +6,7 @@ import {
   inpFilter, inpMap,
   solve,
   // solve2 as solve,
-} from './12.2';
+} from './13';
 
 // read filename from stdin; exit if not provided
 const [fname] = process.argv.slice(2);
