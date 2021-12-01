@@ -4,8 +4,8 @@ import { Writable } from 'stream';
 import { xForm } from './1';
 import {
   inpFilter, inpMap,
-  solve,
-  // solve2 as solve,
+  // solve,
+  solve2 as solve,
 } from './13';
 
 // read filename from stdin; exit if not provided
