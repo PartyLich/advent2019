@@ -134,3 +134,19 @@ export const solve = pipe(
     (factory) => [factory, getFormula()(factory)],
     ([factory, formula]) => sumOreRequired(factory, formula),
 );
+
+// ore available for part two
+const ORE_TOTAL = 1000000000000;
+
+// Given 1 trillion ORE, what is the maximum amount of FUEL you can produce?
+export const solve2 = (input) => {
+  const factory = makeFactory(input);
+  const orePerOne = sumOreRequired(factory, getFormula()(factory));
+  const minFuel = Math.floor(ORE_TOTAL / orePerOne);
+
+  const adjFactory =
+    { ...factory, foo: { prod: 1, ingredients: [[minFuel, 'FUEL']] } };
+  const orePerMinFuel = sumOreRequired(adjFactory, getFormula('foo')(adjFactory));
+
+  return Math.floor(minFuel * ORE_TOTAL / orePerMinFuel);
+};
