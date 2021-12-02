@@ -122,15 +122,15 @@ export const makeFactory = pipe(
     reduceObjs,
 );
 
-// Factory -> { [string]: number }
-export const getFormula = pipe(
-    findFormula('FUEL'),
+// string -> Factory -> { [string]: number }
+export const getFormula = (name = 'FUEL') => pipe(
+    findFormula(name),
     simplifyFormula,
 );
 
 // what is the minimum amount of ORE required to produce exactly 1 FUEL?
 export const solve = pipe(
     makeFactory,
-    (factory) => [factory, getFormula(factory)],
+    (factory) => [factory, getFormula()(factory)],
     ([factory, formula]) => sumOreRequired(factory, formula),
 );
