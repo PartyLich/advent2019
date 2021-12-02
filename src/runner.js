@@ -5,9 +5,8 @@ import { xForm } from './1';
 import {
   inpFilter, inpMap,
   // solve,
-  // solve2 as solve,
-  visual as solve,
-} from './13';
+  solve2 as solve,
+} from './14';
 
 // read filename from stdin; exit if not provided
 const [fname] = process.argv.slice(2);
