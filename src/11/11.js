@@ -74,7 +74,7 @@ export const LEFT = 0;
 export const RIGHT = 1;
 
 // turn a vector 90 degrees in the specified direction
-// Point -> Direction -> Point
+// Direction -> Point -> Point
 export const turn = (turnDir) => (currentVector) => {
   switch (turnDir) {
     case LEFT:
