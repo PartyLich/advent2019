@@ -4,7 +4,8 @@ import { Writable } from 'stream';
 import { xForm } from './1';
 import {
   inpFilter, inpMap,
-  solve,
+  // solve,
+  visual as solve,
   // solve2 as solve,
 } from './15';
 
