@@ -189,3 +189,37 @@ export const solve = pipe(
       return dijkMap[toKey(Point())].weight;
     },
 );
+
+// How many minutes will it take to fill with oxygen? Aka what is the largest
+// distance to the goal node
+export const solve2 = pipe(
+    makeComputer,
+    (cpu) => {
+      // find the target position
+      let [tiles, target] = solveMaze(cpu)();
+
+      tiles = Object.entries(tiles).reduce(
+          (acc, [key, value]) => {
+            if (value.weight === Infinity) return acc;
+
+            const position = JSON.parse(key);
+            // set goal to 0 and other floor cells arbitrarily high
+            const weight = (eq(target)(position)) ? 0 : 2000;
+
+            acc[key] = { ...value, weight };
+            return acc;
+          },
+          tiles,
+      );
+
+      // map the rest of the maze
+      const [dijkMap, _] = solveMaze(cpu)([tiles, target]);
+      // return max value
+      return Object.values(dijkMap).reduce(
+          (acc, { weight }) => (weight === Infinity)
+              ? acc
+              : Math.max(acc, weight),
+          -Infinity,
+      );
+    },
+);
