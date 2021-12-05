@@ -54,9 +54,9 @@ const toGrid = (tiles) => {
 };
 
 // string to clear the console
-const SOFT_CLEAR = '\x1B[2J';
+export const SOFT_CLEAR = '\x1B[2J';
 // set cursor to (1, 1)
-const SET_CURSOR = '\x1B[1;1H';
+export const SET_CURSOR = '\x1B[1;1H';
 
 // play a game of breakout
 // Computer -> number
