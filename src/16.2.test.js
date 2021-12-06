@@ -4,6 +4,7 @@ import {
   inpMap,
   getOffset,
   lastHalfFFt,
+  mutLastHalfFFt,
   fftFrom,
   solve,
 } from './16.2';
@@ -67,6 +68,34 @@ test('16.2: lastHalfFft()', (t) => {
 
     const expected = [1, 2, 3, 4, 5, 4, 9, 8];
     const actual = lastHalfFFt(5)(input);
+    t.deepEqual(actual, expected, msg);
+  }
+  t.end();
+});
+
+test('16.2: mutLastHalfFft()', (t) => {
+  {
+    const msg = 'last half of ----5678 updated after one FFT -> ----6158';
+    const input = [1, 2, 3, 4, 5, 6, 7, 8];
+
+    const expected = [1, 2, 3, 4, 6, 1, 5, 8];
+    const actual = mutLastHalfFFt()(input);
+    t.deepEqual(actual, expected, msg);
+  }
+  {
+    const msg = 'last half of ----5518 updated after one FFT -> ----9498';
+    const input = [1, 2, 3, 4, 5, 5, 1, 8];
+
+    const expected = [1, 2, 3, 4, 9, 4, 9, 8];
+    const actual = mutLastHalfFFt()(input);
+    t.deepEqual(actual, expected, msg);
+  }
+  {
+    const msg = 'update from idx 5 of ----5518 updated after one FFT -> ----9498';
+    const input = [1, 2, 3, 4, 5, 5, 1, 8];
+
+    const expected = [1, 2, 3, 4, 5, 4, 9, 8];
+    const actual = mutLastHalfFFt(5)(input);
     t.deepEqual(actual, expected, msg);
   }
   t.end();

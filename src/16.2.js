@@ -44,12 +44,28 @@ export const lastHalfFFt = (from) => (digits) => {
   return digits.slice(0, from).concat(result);
 };
 
+// as above, but with mutation to avoid array creation overhead (ie perf)
+// it's a massive difference. 59minutes vs 250ms
+// number -> []number -> []number
+export const mutLastHalfFFt = (from) => (digits) => {
+  const len = digits.length;
+  from = from || (len / 2);
+
+  for (let i = 1; i < (len - from); i++) {
+    const prev = digits[len - i];
+    const next = (prev + digits[len - i - 1]) % 10;
+    digits[len - i - 1] = next;
+  }
+
+  return digits;
+};
+
 // number -> number -> []number
 export const fftFrom = (from) => (phases) => (signal) => {
-  let result = signal;
+  let result = signal.slice();
 
   for (let i = phases; i > 0; i--) {
-    result = lastHalfFFt(from)(result);
+    result = mutLastHalfFFt(from)(result);
   }
 
   return result;
