@@ -28,15 +28,42 @@ export const getOffset = pipe(
     toDecimal,
 );
 
+// calculate the digits for the last half, starting from the index specified
+// number -> []number -> []number
+export const lastHalfFFt = (from) => (digits) => {
+  const result = [];
+  const len = digits.length;
+  from = from || (len / 2);
+
+  for (let i = 0; i < len - from; i++) {
+    const prev = result[0] || 0;
+    const next = (prev + digits[len - 1 - i]) % 10;
+    result.unshift(next);
+  }
+
+  return digits.slice(0, from).concat(result);
+};
+
+// number -> number -> []number
+export const fftFrom = (from) => (phases) => (signal) => {
+  let result = signal;
+
+  for (let i = phases; i > 0; i--) {
+    result = lastHalfFFt(from)(result);
+  }
+
+  return result;
+};
+
+// what is the eight-digit message embedded in the final output list?
 // []string -> string
 export const solve = ([input]) => {
-  const msgLength = 8;
+  const MSG_LENGTH = 8;
   const msgOffset = getOffset(input);
-  console.log('msgOffset dec: ', msgOffset);
 
   return pipe(
-      fft(100),
-      sliceArr(msgOffset, msgOffset + msgLength),
+      fftFrom(msgOffset)(100),
+      sliceArr(msgOffset, msgOffset + MSG_LENGTH),
       joinDigits,
   )(input);
 };
