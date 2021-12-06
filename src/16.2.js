@@ -1,15 +1,8 @@
 // Advent of Code 2019
 // Day 16: Flawed Frequency Transmission
 // Part 2
-import {
-  pipe,
-  toDecimal,
-} from './funtils';
-import {
-  fft,
-  joinDigits,
-  sliceFirst,
-} from './16';
+import { pipe, toDecimal } from './funtils';
+import { joinDigits, sliceFirst } from './16';
 
 export { inpFilter } from './3';
 
@@ -26,7 +19,6 @@ export const formatInput = (times) => (str) => {
 };
 
 export const inpMap = formatInput(10000);
-
 
 const sliceArr = (start, end) => (arr) => arr.slice(start, end);
 
