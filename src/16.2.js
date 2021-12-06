@@ -20,10 +20,9 @@ const firstSeven = sliceFirst(7);
 export const formatInput = (times) => (str) => {
   const arr = [];
   arr.length = times;
-  arr.fill(str);
-  return arr.map((str) => (str.split('')))
-      .reduce((acc, next) => acc.concat(next))
-      .map(toDecimal);
+  const nums = str.split('').map(toDecimal);
+  arr.fill(null);
+  return arr.flatMap(() => nums.slice());
 };
 
 export const inpMap = formatInput(10000);
