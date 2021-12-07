@@ -7,7 +7,7 @@ import {
   solve,
   // visual as solve,
   // solve2 as solve,
-} from './16.2';
+} from './17';
 
 // read filename from stdin; exit if not provided
 const [fname] = process.argv.slice(2);
