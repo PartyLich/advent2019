@@ -1,6 +1,7 @@
 import test from 'tape';
 import {
   get2d,
+  sumAlignmentParameters,
 } from './17';
 
 
@@ -18,6 +19,27 @@ test('17: get2d()', (t) => {
         expected += 1;
       }
     }
+  }
+  t.end();
+});
+
+test('17: sumAlignmentParameters()', (t) => {
+  {
+    const msg = 'sums intersection alignment parameters';
+    const img = `..#..........
+..#..........
+#######...###
+#.#...#...#.#
+#############
+..#...#...#..
+..#####...^..
+
+`;
+    const map = img.split('').map((str) => str.charCodeAt(0));
+
+    const expected = 76;
+    const actual = sumAlignmentParameters(map);
+    t.equal(actual, expected, msg);
   }
   t.end();
 });
