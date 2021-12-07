@@ -5,6 +5,7 @@ import {
 import {
   findBot,
   idxToPoint,
+  findPath,
 } from './17.2';
 
 
@@ -95,6 +96,35 @@ test('17.2: idxToPoint()', (t) => {
         i += 1;
       }
     }
+  }
+  t.end();
+});
+
+test('17.2: findPath()', (t) => {
+  {
+    const msg = 'returns unoptimized path instruction list';
+    const img = `#######...#####
+#.....#...#...#
+#.....#...#...#
+......#...#...#
+......#...###.#
+......#.....#.#
+^########...#.#
+......#.#...#.#
+......#########
+........#...#..
+....#########..
+....#...#......
+....#...#......
+....#...#......
+....#####......
+
+`;
+    const map = img.split('').map((str) => str.charCodeAt(0));
+
+    const expected = 'R,8,R,8,R,4,R,4,R,8,L,6,L,2,R,4,R,4,R,8,R,8,R,8,L,6,L,2';
+    const actual = findPath(map).join(',');
+    t.equal(actual, expected, msg);
   }
   t.end();
 });
