@@ -6,6 +6,7 @@ import {
   findBot,
   idxToPoint,
   findPath,
+  getBuckets,
 } from './17.2';
 
 
@@ -125,6 +126,22 @@ test('17.2: findPath()', (t) => {
     const expected = 'R,8,R,8,R,4,R,4,R,8,L,6,L,2,R,4,R,4,R,8,R,8,R,8,L,6,L,2';
     const actual = findPath(map).join(',');
     t.equal(actual, expected, msg);
+  }
+  t.end();
+});
+
+test('17.2: getBuckets()', (t) => {
+  {
+    const msg = 'reduces path instruction list to repeated chunks';
+    const path = ['R', 8, 'R', 8, 'R', 4, 'R', 4, 'R', 8, 'L', 6, 'L', 2, 'R', 4, 'R', 4, 'R', 8, 'R', 8, 'R', 8, 'L', 6, 'L', 2];
+
+    const expected = [
+      ['R', 8, 'R', 8],
+      ['R', 4, 'R', 4, 'R', 8],
+      ['L', 6, 'L', 2],
+    ];
+    const actual = getBuckets(path);
+    t.deepEqual(actual.sort(), expected.sort(), msg);
   }
   t.end();
 });

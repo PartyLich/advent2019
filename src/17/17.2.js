@@ -77,3 +77,78 @@ export const findPath = (map) => {
     }
   }
 };
+
+// reduce path instruction list
+// []string -> [][]string | number
+export const getBuckets = (path) => {
+  let start = 0;
+  let end = 1;
+  const buckets = [];
+
+  while (start < path.length - 2) {
+    let window = path.slice(start, end + 1);
+    let bucket = window;
+
+    let exists = path.slice(end + 1).join('')
+        .includes(window.join(''));
+    if (!exists) break;
+
+    while (exists) {
+      bucket = window;
+      end += 2;
+      const occurences = [
+        ...path.slice(end + 1).join('')
+            .matchAll(bucket.join('')),
+      ].length;
+      buckets.push([bucket, occurences]);
+
+      window = path.slice(start, end + 1);
+      exists = path.slice(end + 1).join('')
+          .includes(window.join(''));
+    }
+
+    start += 2;
+    end = start + 1;
+  }
+
+  return optimize(path)(buckets);
+};
+
+// reduce buckets to a set of 3 that covers the entire path
+const optimize = (path) => (buckets) => {
+  // sort by length then by occurences
+  buckets = buckets.sort(([a, countA], [b, countB]) =>
+    (a.length !== b.length)
+        ? b.length - a.length
+        : countB - countA);
+
+  const len = buckets.length;
+  const result = [];
+  let first = 0;
+
+  while (result.length !== 3) {
+    let str = path.join('');
+    result.length = 0;
+
+    for (let i = first; i < len; i++) {
+      const [bucket] = buckets[i];
+      const bucketStr = bucket.join('');
+      // NOTE: max fn size 20. size = len + (len - 1)
+      if (bucketStr.length > 10) continue;
+
+      let count = [...str.matchAll(bucketStr)];
+      if (count.length > 1) {
+        result.push(bucket);
+
+        str = str.replaceAll(bucketStr, ' '.repeat(bucket.length));
+        count = [...str.matchAll(bucketStr)];
+      }
+      // too many fns, retry
+      if (result.length > 3) break;
+    }
+
+    first += 1;
+  }
+
+  return result;
+};
