@@ -9,7 +9,7 @@ import { makeGen } from '../11/11';
 // retrieve camera output from an intcode program
 // NOTE: keeps empty cells, which isnt necessary or useful for part 1
 // Computer -> []number
-const getMap = (computer) => {
+export const getMap = (computer) => {
   const bot = makeGen(computer);
   const map = [];
 
@@ -64,7 +64,7 @@ export const sumAlignmentParameters = (map) => {
 
 // create a computer from the supplied program
 // []number -> Computer
-const makeComputer = pipe(
+export const makeComputer = pipe(
     (input) => input.flat(),
     Computer,
 );

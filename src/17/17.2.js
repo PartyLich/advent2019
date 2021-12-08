@@ -1,13 +1,13 @@
 // Advent of Code 2019
 // Day 17: Set and Forget
 // part 2
-import { Point, concat } from '../11/11';
+import { pipe } from '../funtils';
+
+import { Computer } from '../9';
+import { Point, concat, makeGen } from '../11/11';
 import { eq } from '../12.2';
 import { DIR_VECTORS } from '../15/15';
-import {
-  get2d,
-  getDimensions,
-} from './17';
+import { get2d, getDimensions, makeComputer, getMap } from './17';
 
 
 // return index of a bot character and orientation
@@ -201,3 +201,51 @@ export const formatProgram = (buckets) => (main) => [
   'n'.charCodeAt(0),
   NEWLINE,
 ];
+
+// create a controllable computer from the supplied program
+// []number -> Computer
+const makeControllable = pipe(
+    (input) => input.flat(),
+    (input) => {
+      // Force the vacuum robot to wake up by changing the value in your ASCII
+      // program at address 0 from 1 to 2
+      input[0] = 2;
+      return input;
+    },
+    Computer,
+);
+
+const getProgram = pipe(
+    makeComputer,
+    getMap,
+    findPath,
+    (path) => {
+      const buckets = getBuckets(path);
+      const routine = getRoutine(path)(buckets);
+      return formatProgram(buckets)(routine);
+    },
+);
+
+// how much dust does the vacuum robot report it has collected?
+export const solve = pipe((input) => {
+  const program = getProgram(input);
+  const cpu = makeControllable(input);
+  const bot = makeGen(cpu);
+  let dust = 0;
+
+  let next = bot.next();
+  while (!next.done) {
+    const [, output] = next.value;
+    if (output === undefined) {
+      // expecting input
+      const input = program.shift();
+      next = bot.next(input);
+      continue;
+    }
+
+    dust = output;
+    next = bot.next();
+  }
+
+  return dust;
+});
