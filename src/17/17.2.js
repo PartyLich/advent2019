@@ -2,6 +2,7 @@
 // Day 17: Set and Forget
 // part 2
 import { Point, concat } from '../11/11';
+import { eq } from '../12.2';
 import { DIR_VECTORS } from '../15/15';
 import {
   get2d,
@@ -151,4 +152,24 @@ const optimize = (path) => (buckets) => {
   }
 
   return result;
+};
+
+// return fn call sequence from the supplied fn list and path
+// []string -> []string -> []number
+export const getRoutine = (path) => (buckets) => {
+  const routine = [];
+
+  let distance = 0;
+  while (distance < path.length) {
+    for (const [j, bucket] of buckets.entries()) {
+      const segment = path.slice(distance, distance + bucket.length);
+      if (eq(bucket)(segment)) {
+        routine.push(j);
+        distance += bucket.length;
+        break;
+      }
+    }
+  }
+
+  return routine;
 };

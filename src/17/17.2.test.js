@@ -7,6 +7,7 @@ import {
   idxToPoint,
   findPath,
   getBuckets,
+  getRoutine,
 } from './17.2';
 
 
@@ -142,6 +143,23 @@ test('17.2: getBuckets()', (t) => {
     ];
     const actual = getBuckets(path);
     t.deepEqual(actual.sort(), expected.sort(), msg);
+  }
+  t.end();
+});
+
+test('17.2: getRoutine()', (t) => {
+  {
+    const msg = 'creates a main fn from the supplied fn list';
+    const path = ['R', 8, 'R', 8, 'R', 4, 'R', 4, 'R', 8, 'L', 6, 'L', 2, 'R', 4, 'R', 4, 'R', 8, 'R', 8, 'R', 8, 'L', 6, 'L', 2];
+    const buckets = [
+      ['R', 8, 'R', 8],
+      ['R', 4, 'R', 4, 'R', 8],
+      ['L', 6, 'L', 2],
+    ];
+
+    const expected = [0, 1, 2, 1, 0, 2];
+    const actual = getRoutine(path)(buckets);
+    t.deepEqual(actual, expected, msg);
   }
   t.end();
 });
