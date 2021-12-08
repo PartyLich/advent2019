@@ -173,3 +173,31 @@ export const getRoutine = (path) => (buckets) => {
 
   return routine;
 };
+
+const FN_MAP = [
+  // A
+  65,
+  // B
+  66,
+  // C
+  67,
+];
+const COMMA = 44;
+const NEWLINE = 10;
+
+// any -> []number
+const toAscii = (c) => `${ c }`.split('').map((char) => char.charCodeAt(0));
+
+// format fns and main as bot input list (ascii codes)
+// [][]string | number -> []number -> []number
+export const formatProgram = (buckets) => (main) => [
+  ...main.flatMap((i, idx) => idx > 0 ? [COMMA, FN_MAP[i]] : [FN_MAP[i]]),
+  NEWLINE,
+  ...buckets.flatMap((bucket) => bucket
+      .flatMap((c, idx) => idx > 0 ? [COMMA].concat(toAscii(c)) : toAscii(c))
+      .concat([NEWLINE])),
+  // you will be asked whether you want to see a continuous video feed;
+  // provide either y or n and a newline.
+  'n'.charCodeAt(0),
+  NEWLINE,
+];

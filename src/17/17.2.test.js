@@ -8,6 +8,7 @@ import {
   findPath,
   getBuckets,
   getRoutine,
+  formatProgram,
 } from './17.2';
 
 
@@ -159,6 +160,34 @@ test('17.2: getRoutine()', (t) => {
 
     const expected = [0, 1, 2, 1, 0, 2];
     const actual = getRoutine(path)(buckets);
+    t.deepEqual(actual, expected, msg);
+  }
+  t.end();
+});
+
+test('17.2: formatProgram()', (t) => {
+  {
+    const msg = 'format fns and main as bot input list (ascii codes)';
+    const buckets = [
+      ['R', 8, 'R', 8],
+      ['R', 4, 'R', 4, 'R', 8],
+      ['L', 6, 'L', 2],
+    ];
+    const main = [0, 1, 2, 1, 0, 2];
+
+    const expected = [
+      // Main routine: A,B,C,B,A,C
+      65, 44, 66, 44, 67, 44, 66, 44, 65, 44, 67, 10,
+      // Function A:   R,8,R,8
+      82, 44, 56, 44, 82, 44, 56, 10,
+      // Function B:   R,4,R,4,R,8
+      82, 44, 52, 44, 82, 44, 52, 44, 82, 44, 56, 10,
+      // Function C:   L,6,L,2
+      76, 44, 54, 44, 76, 44, 50, 10,
+      // no continuous feed
+      110, 10,
+    ];
+    const actual = formatProgram(buckets)(main);
     t.deepEqual(actual, expected, msg);
   }
   t.end();
