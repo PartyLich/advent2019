@@ -24,7 +24,7 @@ const GOAL = 2;
 // type Status = WALL | OK | GOAL
 
 // cardinal direction vectors
-const DIR_VECTORS = [
+export const DIR_VECTORS = [
   // NORTH,
   Point(0, -1),
   // EAST,
