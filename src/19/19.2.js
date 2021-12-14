@@ -15,3 +15,22 @@ const isInBeam = (computer) => (x, y) => {
   const [, output] = next.value;
   return !!output;
 };
+
+// return width of the beam at provided height
+// ((number, number) -> bool) -> (number, number | undefined) -> number
+export const rowWidth = (isInBeam) => (y, from = 0) => {
+  let width = 0;
+  let hit = false;
+  let end = false;
+  let x = from;
+
+  while (!(hit && end)) {
+    const output = isInBeam(x, y);
+    width += output;
+    hit = hit || output;
+    end = !output;
+    x += 1;
+  }
+
+  return width;
+};
