@@ -27,6 +27,10 @@ export const testBeam = (max) => (computer) => {
         first = true;
         start = x;
       }
+      // output is contiguous; break when we stop getting active values
+      if (first && !output) {
+        break;
+      }
     }
   }
 
