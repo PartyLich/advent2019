@@ -1,7 +1,7 @@
 // Advent of Code 2019
 // Day 19: Tractor Beam
 // Part 2: Gettin Triggy Wit It
-import { makeGen } from '../11/11';
+import { makeGen, Point } from '../11/11';
 
 
 // return true if the supplied point is affected by the beam, false otherwise
@@ -33,4 +33,13 @@ export const rowWidth = (isInBeam) => (y, from = 0) => {
   }
 
   return width;
+};
+
+// return first beam affected Point at the supplied height y, starting at from
+// ((number, number) -> bool) -> (number, number | undefined) -> Point
+export const first = (isInBeam) => (y, from = 0) => {
+  // potentially infinite
+  for (let x = from; true; x++) {
+    if (isInBeam(x, y)) return Point(x, y);
+  }
 };
