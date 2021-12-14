@@ -43,3 +43,17 @@ export const first = (isInBeam) => (y, from = 0) => {
     if (isInBeam(x, y)) return Point(x, y);
   }
 };
+
+// true if square of given size with bottom left corner at given point is
+// within the beam
+// check corners, provide bottom left
+// (number) -> ((number, number) -> bool) -> Point -> bool
+export const squareInBeam = (size) => (isInBeam) => ({ x = 0, y = 0 } = {}) =>
+  // bottom left
+  isInBeam(x, y) &&
+  // top left
+  isInBeam(x, y - (size - 1)) &&
+  // bottom right
+  // isInBeam(x + (size - 1), y) &&
+  // top right
+  isInBeam(x + (size - 1), y - (size - 1));
