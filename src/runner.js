@@ -9,6 +9,7 @@ import {
   solve2 as solve,
 } from './19';
 
+
 // read filename from stdin; exit if not provided
 const [fname] = process.argv.slice(2);
 if (!fname) {
@@ -18,7 +19,6 @@ if (!fname) {
 
 console.log(`Input from ${ fname }.txt`);
 const fstream = fs.createReadStream(__dirname + `/../input/${ fname }.txt`);
-
 
 // string -> bool
 const notEmpty = (str) => !!str;
@@ -41,9 +41,7 @@ const w = new Writable({
 
 process.stdout.on('error', process.exit);
 
-const exec = (input) => {
-  return solve(input);
-};
+const exec = (input) => solve(input);
 
 console.time('load');
 fstream.pipe(w);
