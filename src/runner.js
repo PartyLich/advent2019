@@ -41,9 +41,11 @@ const exec = (input) => {
   return solve(input);
 };
 
+console.time('load');
 fstream.pipe(w);
 
 fstream.on('end', () => {
+  console.timeEnd('load');
   console.log('Executing...');
   console.time('execute');
   const result = exec(arr);
