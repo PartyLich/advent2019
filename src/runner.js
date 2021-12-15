@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { Writable } from 'stream';
 
-import { xForm } from './1';
+import { xForm as lines } from './1';
 import {
   inpFilter, inpMap,
   // solve,
@@ -27,10 +27,14 @@ let arr = [];
 
 const w = new Writable({
   write(chunk, _, next) {
-    arr = arr.concat(xForm(chunk))
-        .filter(notEmpty)
-        .filter(inpFilter)
-        .map(inpMap);
+    const c = lines(chunk).reduce(
+        (acc, next) => (notEmpty(next) && inpFilter(next))
+            ? [...acc, inpMap(next)]
+            : acc,
+        [],
+    );
+    arr = arr.concat(c);
+
     next();
   },
 });
