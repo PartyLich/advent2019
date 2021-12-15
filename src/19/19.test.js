@@ -3,6 +3,7 @@ import {
   rowWidth,
   first,
   squareInBeam,
+  formatAnswer,
 } from './19.2';
 
 
@@ -44,6 +45,16 @@ test('19.2: squareInBeam()', (t) => {
     t.ok(inside, msg);
     const outside = squareInBeam(3)(inBeam)({ x: 6, y: 2 });
     t.notOk(outside, msg);
+  }
+  t.end();
+});
+
+test('19.2: formatAnswer()', (t) => {
+  {
+    const msg = 'formats point to specified number format';
+    const expected = 250020;
+    const actual = formatAnswer(10)({ x: 25, y: 29 });
+    t.equal(actual, expected, msg);
   }
   t.end();
 });
