@@ -92,9 +92,10 @@ test('17.2: idxToPoint()', (t) => {
     let i = 0;
     for (let r = 0; r < 2; r++) {
       for (let c = 0; c < 2; c++) {
-        const expected = { x: c, y: r };
         const actual = idxToPoint(width)(i);
-        t.deepEqual(actual, expected, msg);
+        t.equal(typeof actual, 'object');
+        t.equal(c, actual.x, msg);
+        t.equal(r, actual.y, msg);
 
         i += 1;
       }

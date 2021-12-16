@@ -73,10 +73,10 @@ export const Point = (x = 0, y = 0) => ({
 });
 
 // concat for Point type
-export const concat = (ptA) => (ptB) => ({
-  x: ptA.x + ptB.x,
-  y: ptA.y + ptB.y,
-});
+export const concat = (ptA) => (ptB) => Point(
+    ptA.x + ptB.x,
+    ptA.y + ptB.y,
+);
 
 // robot turning directions. always 90degrees
 // type Direction = LEFT | RIGHT
