@@ -60,7 +60,17 @@ export const makeGen = function* ({ mem = [], pc = 0, rb = 0 } = {}) {
   return [state, outputBuf.shift()];
 };
 
-export const Point = (x = 0, y = 0) => ({ x, y });
+// Takes x and y coordinates and returns a Point instance
+export const Point = (x = 0, y = 0) => ({
+  x,
+  y,
+  __proto__: {
+    constructor: Point,
+    toString() {
+      return JSON.stringify(this);
+    },
+  },
+});
 
 // concat for Point type
 export const concat = (ptA) => (ptB) => ({
