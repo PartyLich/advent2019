@@ -79,3 +79,44 @@ const parseLabels = (grid) => {
 
   return { portals, map };
 };
+
+// dijkstra's algorithm
+// edge lengths are all implicitly 1
+// Point -> {[string]: Node } -> {[string]: Node }
+export const dijkstra = (source) => (grid) => {
+  const visited = new Set();
+  const result = {};
+
+  const key = source.toString();
+  result[key] = Node({
+    ...source,
+    weight: 0,
+  });
+  const queue = [source];
+
+  while (queue.length) {
+    const current = queue.shift();
+    const key = current.toString();
+    if (visited.has(key)) continue;
+
+    visited.add(key);
+
+    const { neighbors } = grid[key];
+    for (const neighbor of neighbors) {
+      const nKey = neighbor.toString();
+      if (visited.has(nKey)) continue;
+
+      const prevDist = result[key].weight;
+      const tile = grid[nKey];
+      const alt = prevDist + 1;
+
+      result[nKey] = Node({
+        ...tile,
+        weight: alt,
+      });
+      queue.push(neighbor);
+    }
+  }
+
+  return result;
+};
