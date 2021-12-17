@@ -24,9 +24,10 @@ test('19.2: first()', (t) => {
     const msg = 'return first beam affected Point at the supplied height y';
     const inBeam = (x, _y) => [0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0][x];
 
-    const expected = { x: 5, y: 3 };
     const actual = first(inBeam)(3, 2);
-    t.deepEqual(actual, expected, msg);
+    t.equal(typeof actual, 'object');
+    t.equal(5, actual.x, msg);
+    t.equal(3, actual.y, msg);
   }
   t.end();
 });

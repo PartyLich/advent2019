@@ -24,3 +24,9 @@ export const desc = (a /* : number */, b /* : number */) => b - a;
 // negate a predicate
 export const not = /* ::<T> */(predicate /* : (T) => bool */) =>
   (value /* : T */) => !predicate(value);
+
+// string -> bool
+export const isUpperCase = (char /* : string */) => /[A-Z]/.test(char);
+
+// string -> bool
+export const isLowerCase = (char /* : string */) => /[a-z]/.test(char);

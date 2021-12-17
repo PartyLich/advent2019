@@ -103,14 +103,17 @@ test('11: generator', (t) => {
 test('11: Point constructor()', (t) => {
   const msg = 'creates a Point instance (with zero validation OMG)';
   {
-    const expected = { x: 1, y: 1 };
-    const actual = Point(1, 1);
-    t.deepEqual(actual, expected, msg);
-  }
-  {
-    const expected = { x: -20, y: 21 };
-    const actual = Point(-20, 21);
-    t.deepEqual(actual, expected, msg);
+    const cases = [
+      [1, 1],
+      [-20, 21],
+    ];
+
+    for (const [x, y] of cases) {
+      const actual = Point(x, y);
+      t.equal(typeof actual, 'object');
+      t.equal(x, actual.x, msg);
+      t.equal(y, actual.y, msg);
+    }
   }
   t.end();
 });
@@ -118,14 +121,16 @@ test('11: Point constructor()', (t) => {
 test('11: Point concat()', (t) => {
   const msg = 'joins two Point instances';
   {
-    const expected = { x: 1, y: 1 };
     const actual = concat({ x: 0, y: 0 })({ x: 1, y: 1 });
-    t.deepEqual(actual, expected, msg);
+    t.equal(typeof actual, 'object');
+    t.equal(1, actual.x, msg);
+    t.equal(1, actual.y, msg);
   }
   {
-    const expected = { x: -20, y: 21 };
     const actual = concat({ x: 30, y: -21 })({ x: -50, y: 42 });
-    t.deepEqual(actual, expected, msg);
+    t.equal(typeof actual, 'object');
+    t.equal(-20, actual.x, msg);
+    t.equal(21, actual.y, msg);
   }
   t.end();
 });
