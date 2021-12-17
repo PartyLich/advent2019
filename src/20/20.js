@@ -1,6 +1,6 @@
 // Advent of Code 2019
 // Day 20: Donut Maze
-import { isUpperCase } from '../funtils';
+import { isUpperCase, pipe } from '../funtils';
 
 import { Point, concat } from '../11/11';
 import { DIR_VECTORS } from '../15/15';
@@ -120,3 +120,19 @@ export const dijkstra = (source) => (grid) => {
 
   return result;
 };
+
+export const inpMap = (str) => str.split('');
+
+// Return shortest steps to get from the open tile marked AA to the open tile
+// marked ZZ
+// [][]string -> number
+export const solve = pipe(
+    parseLabels,
+    ({ portals, map }) => {
+      const start = portals['AA'][0];
+      const end = portals['ZZ'][0];
+      const distance = dijkstra(start)(map);
+
+      return distance[end].weight;
+    },
+);
