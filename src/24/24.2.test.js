@@ -1,8 +1,10 @@
 import test from 'tape';
+import { parseLine } from './24';
 
 import {
   fmt,
   step,
+  solve,
 } from './24.2';
 
 
@@ -71,6 +73,22 @@ test('24.2: step()', (t) => {
     ]);
     const actual = step(grid);
     t.deepEqual(actual, expected, msg);
+  }
+  t.end();
+});
+
+test('24.2: solve()', (t) => {
+  {
+    const msg = 'return count of living bugs';
+    const input = `....#
+#..#.
+#..##
+..#..
+#....`.split('\n').map(parseLine);
+
+    const expected = 99;
+    const actual = solve(input, 10);
+    t.equal(actual, expected, msg);
   }
   t.end();
 });

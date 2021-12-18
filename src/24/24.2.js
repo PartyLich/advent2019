@@ -102,33 +102,63 @@ const getNeighbors = (getTile) => (r, c, z) => {
   ];
 };
 
+// true if a cell should be alive in the next state, false otherwise
+// bool -> [][bool, string] -> bool
+const isAlive = (prev = false) => (neighbors = []) => {
+  const frenCount = neighbors.filter(([alive]) => !!alive).length;
+  if (prev) return frenCount === 1;
+
+  return (frenCount === 1 || frenCount === 2);
+};
+
 // update all alive/dead states simultaneously and return new set
 // Set<string> -> Set<string>
 export const step = (grid) => {
   const res = new Set();
   const visited = new Set();
   const _getNeighbors = getNeighbors(getTile(grid));
-  const isAlive = (prev) => ({ r, c, z, neighbors }) => {
-    visited.add(toKey(r, c, z));
-    const frenCount = neighbors.filter(([alive]) => !!alive).length;
-    if (prev) return frenCount === 1;
-
-    return (frenCount === 1 || frenCount === 2);
-  };
 
   for (const tile of grid) {
     const { r, c, z } = JSON.parse(tile);
     const neighbors = _getNeighbors(r, c, z);
 
-    if (isAlive(true)({ r, c, z, neighbors })) res.add(tile);
+    if (isAlive(true)(neighbors)) res.add(tile);
+    visited.add(tile);
+
     for (const [alive, neighbor] of neighbors) {
       if (visited.has(neighbor)) continue;
 
       const { r, c, z } = JSON.parse(neighbor);
       const neighbors = _getNeighbors(r, c, z);
-      if (isAlive(alive)({ r, c, z, neighbors })) res.add(neighbor);
+      if (isAlive(alive)(neighbors)) res.add(neighbor);
+      visited.add(neighbor);
     }
   }
 
   return res;
+};
+
+// print world state visualization to console
+// const print = (state, levels) => {
+//   for (let z = -levels; z <= levels; z++) {
+//     console.log(`Depth ${ z }`);
+//     for (let r = 0; r < 5; r++) {
+//       const row = [];
+//       for (let c = 0; c < 5; c++) {
+//         row.push(state.has(toKey(r, c, z)) ? '#' : '.');
+//       }
+//       console.log(row.join(''));
+//     }
+//   }
+// };
+
+// how many bugs are present after 200 minutes?
+// [][]bool ->
+export const solve = (input, steps = 200) => {
+  let state = fmt(input);
+  for (let t = steps; t; t--) {
+    state = step(state);
+  }
+  // print(state, 5);
+  return state.size;
 };
