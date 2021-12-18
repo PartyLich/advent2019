@@ -101,3 +101,34 @@ const getNeighbors = (getTile) => (r, c, z) => {
         : left,
   ];
 };
+
+// update all alive/dead states simultaneously and return new set
+// Set<string> -> Set<string>
+export const step = (grid) => {
+  const res = new Set();
+  const visited = new Set();
+  const _getNeighbors = getNeighbors(getTile(grid));
+  const isAlive = (prev) => ({ r, c, z, neighbors }) => {
+    visited.add(toKey(r, c, z));
+    const frenCount = neighbors.filter(([alive]) => !!alive).length;
+    if (prev) return frenCount === 1;
+
+    return (frenCount === 1 || frenCount === 2);
+  };
+
+  for (const tile of grid) {
+    const { r, c, z } = JSON.parse(tile);
+    const neighbors = _getNeighbors(r, c, z);
+
+    if (isAlive(true)({ r, c, z, neighbors })) res.add(tile);
+    for (const [alive, neighbor] of neighbors) {
+      if (visited.has(neighbor)) continue;
+
+      const { r, c, z } = JSON.parse(neighbor);
+      const neighbors = _getNeighbors(r, c, z);
+      if (isAlive(alive)({ r, c, z, neighbors })) res.add(neighbor);
+    }
+  }
+
+  return res;
+};
