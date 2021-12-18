@@ -4,10 +4,10 @@ import { Writable } from 'stream';
 import { xForm as lines } from './1';
 import {
   inpFilter, inpMap,
-  solve,
+  // solve,
   // visual as solve,
-  // solve2 as solve,
-} from './20';
+  solve2 as solve,
+} from './24';
 
 
 // read filename from stdin; exit if not provided

@@ -30,3 +30,10 @@ export const isUpperCase = (char /* : string */) => /[A-Z]/.test(char);
 
 // string -> bool
 export const isLowerCase = (char /* : string */) => /[a-z]/.test(char);
+
+export const union = /* ::<T> */(a /* : Set<T> */) =>
+  (b /* : Iterable<T> */) => {
+    const result /* : Set<T> */ = new Set(a);
+    for (const el of b) result.add(el);
+    return result;
+  };
