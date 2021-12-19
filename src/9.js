@@ -46,10 +46,14 @@ export const OPCODES = Object.assign(PREV_OPCODES, {
 
 // set up opcodes with the specified input and output fns
 // (ie supply the effectful computations)
-export const makeOpcodes = (inputFn, outputFn) => Object.assign(OPCODES, {
-  3: { fn: inputFn, params: 1 },
-  4: { fn: outputFn, params: 1 },
-});
+export const makeOpcodes = (inputFn, outputFn) => Object.assign(
+    {},
+    OPCODES,
+    {
+      3: { fn: inputFn, params: 1 },
+      4: { fn: outputFn, params: 1 },
+    },
+);
 
 const POSITION = 0;
 const IMMEDIATE = 1;
@@ -76,7 +80,7 @@ export const loadArgs = ({ mem = [], rb = 0 } = {}) => (modes = []) =>
 // given a Computer state, Operation, and mode list
 //   returns the next Computer state
 // (Computer, Operation, []number) -> Computer
-export const transition = (state = {}, op = {}, modes = []) => {
+export const transition = (opcodes) => (state = {}, op = {}, modes = []) => {
   let { pc, mem, rb } = state;
   let args = mem.slice(pc + 1, pc + 1 + op.params);
 
@@ -91,19 +95,19 @@ export const transition = (state = {}, op = {}, modes = []) => {
   const result = op.fn(...args);
   pc = add(pc, op.params + 1);
   switch (op) {
-    case OPCODES[4]:
+    case opcodes[4]:
       return { mem, pc, rb };
 
-    case OPCODES[5]:
+    case opcodes[5]:
       // intentional fallthrough
-    case OPCODES[6]:
+    case opcodes[6]:
       return {
         mem,
         pc: (result !== null) ? result : pc,
         rb,
       };
 
-    case OPCODES[9]:
+    case opcodes[9]:
       return { mem, pc, rb: rb + result };
 
     default:
@@ -124,7 +128,7 @@ export const compute = (opcodes) => (state = {}) => {
   let op = opcodes[opcode];
 
   while (op.fn) {
-    const nextState = transition(state, op, modes);
+    const nextState = transition(opcodes)(state, op, modes);
     state = nextState;
     opcode = parseOpcode(state.mem[state.pc]);
     modes = parseMode(state.mem[state.pc]);

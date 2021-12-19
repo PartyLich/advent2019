@@ -45,7 +45,7 @@ export const makeGen = function* ({ mem = [], pc = 0, rb = 0 } = {}) {
       input = undefined;
     }
 
-    state = transition(state, op, modes);
+    state = transition(opcodes)(state, op, modes);
 
     if (op === OPCODES[OUTPUT]) {
       // yield that output baby
