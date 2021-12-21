@@ -7,7 +7,7 @@ import {
   // solve,
   // visual as solve,
   solve2 as solve,
-} from './24';
+} from './23';
 
 
 // read filename from stdin; exit if not provided

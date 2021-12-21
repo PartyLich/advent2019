@@ -2,7 +2,6 @@
 // Day 11: Space Police
 import { parseInstruction, parseOpcode, parseMode } from '../5';
 import {
-  OPCODES,
   makeOpcodes,
   transition,
   Computer,
@@ -34,9 +33,8 @@ export const makeGen = function* ({ mem = [], pc = 0, rb = 0 } = {}) {
   let { opcode, modes } = parseInstruction(state.mem[state.pc]);
   let op = opcodes[opcode];
 
-
   while (op.fn) {
-    if (op === OPCODES[INPUT]) {
+    if (opcode === INPUT) {
       // yield same state until we get input (e.g. Block)
       while (input === undefined) {
         input = yield [state, undefined];
@@ -45,9 +43,9 @@ export const makeGen = function* ({ mem = [], pc = 0, rb = 0 } = {}) {
       input = undefined;
     }
 
-    state = transition(state, op, modes);
+    state = transition(opcodes)(state, op, modes);
 
-    if (op === OPCODES[OUTPUT]) {
+    if (opcode === OUTPUT) {
       // yield that output baby
       input = yield [state, outputBuf.shift()];
     }
