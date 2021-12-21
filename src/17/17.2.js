@@ -186,7 +186,7 @@ const COMMA = 44;
 const NEWLINE = 10;
 
 // any -> []number
-const toAscii = (c) => `${ c }`.split('').map((char) => char.charCodeAt(0));
+export const toAscii = (c) => `${ c }`.split('').map((char) => char.charCodeAt(0));
 
 // format fns and main as bot input list (ascii codes)
 // [][]string | number -> []number -> []number
